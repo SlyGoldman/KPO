@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+
+class Vozrastayuchii_spisok
+{
+    static void Main()
+    {
+        List<int> numbers = new List<int> { 1, 3, 5, 7, 9 };
+        bool Vozrastayuchii_spisok = true;
+        for (int i = 1; i < numbers.Count; i++)
+        {
+            if (numbers[i] <= numbers[i - 1])
+            {
+                Vozrastayuchii_spisok = false;
+                break;
+            }
+        }
+        if (Vozrastayuchii_spisok)
+        {
+            Console.WriteLine("Список является возрастающим");
+        }
+        else
+        {
+            Console.WriteLine("Список не является возрастающим");
+        }
+    }
+}
