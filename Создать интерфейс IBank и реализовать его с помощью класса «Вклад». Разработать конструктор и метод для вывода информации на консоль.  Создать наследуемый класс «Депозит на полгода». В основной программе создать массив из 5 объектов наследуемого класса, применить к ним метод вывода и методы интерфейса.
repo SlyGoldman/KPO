@@ -1,0 +1,49 @@
+using System;
+
+interface IBank
+{
+    void DisplayInfo();
+}
+
+class Vklad : IBank
+{
+    private string Familiya;
+    private double dengi;
+
+    public Vklad(string familiya, double nachalnie_dengi)
+    {
+        Familiya = familiya;
+        dengi = nachalnie_dengi;
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Фамилия вкладчика: {Familiya}. Вклад: {dengi} рублей");
+    }
+}
+
+class Vklad_6_Mesacev : Vklad
+{
+    public Vklad_6_Mesacev(string familiya, double nachalnie_dengi) : base(familiya, nachalnie_dengi)
+    {
+
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Vklad_6_Mesacev[] vklads = new Vklad_6_Mesacev[5];
+        vklads[0] = new Vklad_6_Mesacev("Иванов", 1000000);
+        vklads[1] = new Vklad_6_Mesacev("Петров", 150000);
+        vklads[2] = new Vklad_6_Mesacev("Сидоров", 220000);
+        vklads[3] = new Vklad_6_Mesacev("Козлов", 30000);
+        vklads[4] = new Vklad_6_Mesacev("Семенов", 25000);
+
+        foreach (var vklad in vklads)
+        {
+            vklad.DisplayInfo();
+        }
+    }
+}
