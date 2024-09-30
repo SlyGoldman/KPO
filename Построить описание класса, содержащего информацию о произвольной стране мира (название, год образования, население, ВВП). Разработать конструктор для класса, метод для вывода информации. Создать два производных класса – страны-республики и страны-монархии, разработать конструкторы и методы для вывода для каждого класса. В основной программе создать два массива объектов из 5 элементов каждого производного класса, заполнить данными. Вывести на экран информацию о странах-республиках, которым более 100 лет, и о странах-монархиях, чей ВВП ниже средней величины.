@@ -1,0 +1,106 @@
+ using System;
+
+
+class Country
+{
+    public string Strana { get; set; }
+    public int GodOsnovanya { get; set; }
+    public int Naselenie { get; set; }
+    public double VVP { get; set; }
+
+    public Country(string strana, int godOsnovanya, int naselenie, double vvp)
+    {
+        Strana = strana;
+        GodOsnovanya = godOsnovanya;
+        Naselenie = naselenie;
+        VVP = vvp;
+    }
+
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"Страна: {Strana}, Год основания: {GodOsnovanya}, Население: {Naselenie}, ВВП: {VVP}");
+    }
+}
+
+
+class Republic : Country
+{
+    public Republic(string strana, int godOsnovanya, int naselenie, double vvp) : base(strana, godOsnovanya, naselenie, vvp)
+    {
+
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine("Республики: ");
+        base.DisplayInfo();
+    }
+}
+
+
+class Monarchy : Country
+{
+    public bool EstKorol { get; set; }
+
+    public Monarchy(string strana, int godOsnovanya, int naselenie, double vvp, bool estKorol)
+        : base(strana, godOsnovanya, naselenie, vvp)
+    {
+        EstKorol = estKorol;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine("Монархии: ");
+        base.DisplayInfo();
+        Console.WriteLine($"Есть король: {EstKorol}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+
+        Republic[] republics = new Republic[5];
+        republics[0] = new Republic("Республика1", 1910, 150000000, 2500000000);
+        republics[1] = new Republic("Республика2", 1890, 90000000, 1800000000);
+        republics[2] = new Republic("Республика3", 2000, 120000000, 3000000000);
+        republics[3] = new Republic("Республика4", 1800, 70000000, 1500000000);
+        republics[4] = new Republic("Республика5", 1950, 110000000, 2200000000);
+
+        Monarchy[] monarchies = new Monarchy[5];
+        monarchies[0] = new Monarchy("Монархия1", 1800, 5000000, 500000000, true);
+        monarchies[1] = new Monarchy("Монархия2", 1750, 3000000, 300000000, false);
+        monarchies[2] = new Monarchy("Монархия3", 1900, 8000000, 800000000, true);
+        monarchies[3] = new Monarchy("Монархия4", 2000, 6000000, 600000000, false);
+        monarchies[4] = new Monarchy("Монархия5", 1950, 7000000, 700000000, true);
+
+
+        Console.WriteLine("Республики, которым более 100 лет: ");
+        foreach (Republic republic in republics)
+        {
+            if (2024 - republic.GodOsnovanya > 100)
+            {
+                republic.DisplayInfo();
+            }
+        }
+
+
+        double totalVVP = 0;
+        foreach (Monarchy monarchy in monarchies)
+        {
+            totalVVP += monarchy.VVP;
+        }
+        double averageVVP = totalVVP / monarchies.Length;
+
+
+        Console.WriteLine("Монархии с ВВП ниже срежнего: ");
+        foreach (Monarchy monarchy in monarchies)
+        {
+            if (monarchy.VVP < averageVVP)
+            {
+                monarchy.DisplayInfo();
+            }
+        }
+    }
+}
