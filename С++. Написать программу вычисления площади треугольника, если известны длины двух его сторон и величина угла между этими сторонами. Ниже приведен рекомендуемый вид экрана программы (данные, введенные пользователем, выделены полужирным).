@@ -1,0 +1,20 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() 
+
+{
+    double storona1, storona2, ugol;
+    cout << "Введите длину первой стороны треугольника: ";
+    cin >> storona1;
+    cout << "Введите длину второй стороны треугольника: ";
+    cin >> storona2;
+    cout << "Введите величину угла между этими сторонами в градусах: ";
+    cin >> ugol;
+
+    double ploshyad = 0.5 * storona1 * storona2 * sin(ugol * M_PI / 180);
+    cout << "Площадь треугольника: " << ploshyad << endl;
+
+    return 0;
+}
