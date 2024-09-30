@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+int main() 
+{
+    double dlina, shirina, visota;
+    cout << "Введите длину параллелепипеда: ";
+    cin >> dlina;
+    cout << "Введите ширину параллелепипеда: ";
+    cin >> shirina;
+    cout << "Введите высоту параллелепипеда: ";
+    cin >> visota;
+
+    double Ploshyad = 2 * (dlina * shirina + shirina * visota + visota * dlina);
+    cout << "Площадь поверхности параллелепипеда: " << Ploshyad << endl;
+
+    return 0;
+}
