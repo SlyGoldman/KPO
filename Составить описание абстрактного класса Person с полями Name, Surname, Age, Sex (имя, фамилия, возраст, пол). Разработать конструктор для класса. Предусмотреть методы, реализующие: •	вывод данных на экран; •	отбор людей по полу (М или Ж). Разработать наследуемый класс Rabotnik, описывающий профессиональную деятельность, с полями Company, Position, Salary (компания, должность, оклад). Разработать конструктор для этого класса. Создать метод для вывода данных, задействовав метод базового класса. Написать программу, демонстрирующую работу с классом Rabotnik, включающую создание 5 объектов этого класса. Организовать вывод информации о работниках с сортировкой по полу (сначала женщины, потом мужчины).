@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+
+
+abstract class Person
+{
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public int Age { get; set; }
+    public char Pol { get; set; }
+
+    public Person(string name, string surname, int age, char pol)
+    {
+        Name = name;
+        Surname = surname;
+        Age = age;
+        Pol = pol;
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Имя: {Name} {Surname}\nВозраст: {Age}\nПол: {Pol}");
+    }
+
+    public abstract bool FilterByPol(char pol);
+}
+
+
+class Rabotnik : Person
+{
+    public string Company { get; set; }
+    public string Position { get; set; }
+    public double Salary { get; set; }
+
+    public Rabotnik(string name, string surname, int age, char pol, string company, string position, double salary)
+        : base(name, surname, age, pol)
+    {
+        Company = company;
+        Position = position;
+        Salary = salary;
+    }
+
+    public void DisplayInfoWithPersonData()
+    {
+        DisplayInfo();
+        Console.WriteLine($"|Компания: {Company}\nДолжность: {Position}\nЗП: {Salary}");
+    }
+
+    public override bool FilterByPol(char pol)
+    {
+        return Pol == pol;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        List<Rabotnik> employees = new List<Rabotnik>
+        {
+            new Rabotnik("Петр", "Петров", 30, 'M', "Интера", "Разработчик", 50000),
+            new Rabotnik("Иван", "Иванов", 35, 'M', "Первая", "Сисадмин", 60000),
+            new Rabotnik("Елена", "Прекрасная", 28, 'F', "Третья", "Дизайнер", 45000),
+            new Rabotnik("Алекс", "Сидоров", 40, 'M', "Четвретая", "HR-спеиалист", 55000),
+            new Rabotnik("Мария", "Некрасова", 33, 'F', "Пятая", "Уборщик", 48000)
+
+        };
+
+        List<Rabotnik> fEmployees = employees.FindAll(e => e.FilterByPol('F'));
+        List<Rabotnik> mEmployees = employees.FindAll(e => e.FilterByPol('M'));
+
+        Console.WriteLine("Работники женского пола: ");
+        foreach (var employee in fEmployees)
+        {
+            employee.DisplayInfoWithPersonData();
+            Console.WriteLine();
+        }
+
+        Console.WriteLine("Работники мужского пола: ");
+        foreach (var employee in mEmployees)
+        {
+            employee.DisplayInfoWithPersonData();
+            Console.WriteLine();
+        }
+    }
+}
