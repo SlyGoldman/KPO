@@ -1,0 +1,58 @@
+ using System;
+
+class Univery
+{
+    public string Imya { get; set; }
+    public int God_osnovaniya { get; set; }
+    public int Kolichestvo_studentov { get; set; }
+    public int Kolichestvo_facultetov { get; set; }
+
+    public Univery(string imya, int god_osnovaniya, int kolichestvo_studentov, int kolichestvo_facultetov)
+    {
+        Imya = imya;
+        God_osnovaniya = god_osnovaniya;
+        Kolichestvo_studentov = kolichestvo_studentov;
+        Kolichestvo_facultetov = kolichestvo_facultetov;
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine("Университет: " + Imya);
+        Console.WriteLine("Год основания: " + God_osnovaniya);
+        Console.WriteLine("Число студентов: " + Kolichestvo_studentov);
+        Console.WriteLine("Количество факультетов: " + Kolichestvo_facultetov);
+        Console.WriteLine();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Univery[] univerys = new Univery[5];
+
+        univerys[0] = new Univery("Harvard University", 1636, 21000, 13);
+        univerys[1] = new Univery("Stanford University", 1885, 16914, 7);
+        univerys[2] = new Univery("Massachusetts Institute of Technology", 1861, 11466, 6);
+        univerys[3] = new Univery("University of California, Berkeley", 1868, 41989, 14);
+        univerys[4] = new Univery("University of Oxford", 1096, 23590, 44);
+
+        Console.WriteLine("Университеты с числом студетов больше 1000: ");
+        foreach (Univery uni in univerys)
+        {
+            if (uni.Kolichestvo_studentov > 1000)
+            {
+                uni.DisplayInfo();
+            }
+        }
+
+        float srednee_Kolichestvo_facultetov = 0;
+        foreach (Univery uni in univerys)
+        {
+            srednee_Kolichestvo_facultetov += uni.Kolichestvo_facultetov;
+        }
+        srednee_Kolichestvo_facultetov /= univerys.Length;
+
+        Console.WriteLine("Число факультетов, которые не превышают среднее число факультетов по всем вузам: " + srednee_Kolichestvo_facultetov);
+    }
+} 
