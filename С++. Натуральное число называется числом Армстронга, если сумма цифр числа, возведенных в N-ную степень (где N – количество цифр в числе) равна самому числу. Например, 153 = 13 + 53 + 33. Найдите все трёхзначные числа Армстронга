@@ -1,0 +1,33 @@
+include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    cout << "Все трёхзначные числа Армстронга:" << endl;
+  
+    for (int chislo = 100; chislo < 1000; chislo++) {
+        int chislo_o = chislo;
+        int chisla_v_chisle = 0;
+        int summ = 0;
+
+        while (chislo_o != 0) {
+            chislo_o /= 10;
+            chisla_v_chisle++;
+        }
+      
+        chislo_o = chislo;
+
+
+        while (chislo_o != 0) {
+            int razrad = chislo_o % 10;
+            summ += pow(razrad, chisla_v_chisle);
+            chislo_o /= 10;
+        }
+
+        if (summ == chislo) {
+            cout << chislo << " ";
+        }
+    }
+
+    return 0;
+}
