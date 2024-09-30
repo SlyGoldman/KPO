@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int chislo;
+    int count = 0;
+
+    cout << "Введите некоторое количество целых чисел, которое будет заканчиваться нулем: " << endl;
+
+    cin >> chislo;
+    while (chislo != 0) {
+        if (chislo % 3 == 0) {
+            count++;
+        }
+        cin >> chislo;
+    }
+
+    cout << "Получено чисел, которые делятся на 3: " << count << endl;
+    return 0;
+}
