@@ -1,0 +1,19 @@
+using System;
+using System.Collections.Generic;
+
+class Otricatelnie_chisla
+{
+    static void Main()
+    {
+        List<int> numbers = new List<int> { 4, -7, 10, -3, 5, -8 };
+        int Otricatelnie_chisla = 0;
+        foreach (int num in numbers)
+        {
+            if (num < 0)
+            {
+                Otricatelnie_chisla++;
+            }
+        }
+        Console.WriteLine($"Количество отрицательных элементов: {Otricatelnie_chisla}");
+    }
+}
