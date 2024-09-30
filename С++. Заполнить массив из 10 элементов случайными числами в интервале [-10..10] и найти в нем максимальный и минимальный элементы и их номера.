@@ -1,0 +1,31 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+int main() {
+    int array[10];
+    int max = -10, min = 10;
+    int maxIndex, minIndex;
+
+    srand(time(0));
+    for (int i = 0; i < 10; i++) {
+        array[i] = rand() % 21 - 10;
+        cout << array[i] << " ";
+        if (array[i] > max) {
+            max = array[i];
+            maxIndex = i;
+        }
+        if (array[i] < min) {
+            min = array[i];
+            minIndex = i;
+        }
+    }
+
+    cout << endl;
+    cout << "Максимальный элемент: " << max << ", его номер: " << maxIndex << endl;
+    cout << "Минимальный элемент: " << min << ", его номер: " << minIndex << endl;
+
+    return 0;
+}
