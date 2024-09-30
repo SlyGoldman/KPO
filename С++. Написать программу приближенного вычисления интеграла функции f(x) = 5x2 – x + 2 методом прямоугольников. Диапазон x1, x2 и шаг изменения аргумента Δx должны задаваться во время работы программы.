@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+double f(double x) {
+    return 5 * x * x - x + 2;
+}
+
+int main() {
+    double x1, x2, dx;
+    double integral = 0;
+
+    cout << "Введите значение x1: ";
+    cin >> x1;
+    cout << "Введите значение x2: ";
+    cin >> x2;
+    cout << "Введите шаг изменения аргумента (Δx): ";
+    cin >> dx;
+
+    for (double x = x1; x < x2; x += dx) {
+        integral += f(x) * dx;
+    }
+
+    cout << "Приближенное значение интеграла: " << integral << endl;
+
+    return 0;
+}
