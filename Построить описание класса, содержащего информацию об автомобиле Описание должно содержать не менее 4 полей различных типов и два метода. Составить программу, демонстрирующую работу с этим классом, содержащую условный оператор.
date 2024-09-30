@@ -1,0 +1,56 @@
+using System;
+
+class Avtomobile
+{
+    public string marka;
+    public string model;
+    public int god;
+    public double V_dvigatelya;
+
+    public Avtomobile(string marka, string model, int god, double V_dvigatelya)
+    {
+        this.marka = marka;
+        this.model = model;
+        this.god = god;
+        this.V_dvigatelya = V_dvigatelya;
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Марка: {marka}");
+        Console.WriteLine($"Модель: {model}");
+        Console.WriteLine($"Год выпуска: {god}");
+        Console.WriteLine($"Объем двигателя: {V_dvigatelya} литров(-а)");
+    }
+
+    public void Zapusk()
+    {
+        Console.WriteLine("Двигатель запущен");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Avtomobile avto1 = new Avtomobile("VAZ", "2101", 1995, 1.5);
+        Avtomobile avto2 = new Avtomobile("BMW", "X5", 2020, 3.0);
+
+        avto1.DisplayInfo();
+        Console.WriteLine();
+
+        avto2.DisplayInfo();
+        Console.WriteLine();
+
+        if (avto1.god < avto2.god)
+        {
+            Console.WriteLine("Первый автомобиль старше второго");
+        }
+        else
+        {
+            Console.WriteLine("Второй автомобиль старше первого");
+        }
+
+        avto2.Zapusk();
+    }
+}
