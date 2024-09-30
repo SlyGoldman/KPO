@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Введите размер массива: ";
+    cin >> n;
+
+    int* arr = new int[n];
+
+    for (int i = 0; i < n; i++) {
+        cout << "Введите элемент " << (i + 1) << ": ";
+        cin >> arr[i];
+    }
+
+    int minimalny = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < minimalny) {
+            minimalny = arr[i];
+        }
+    }
+
+    cout << "Минимальный элемент: " << minimalny << endl;
+
+    return 0;
+}
