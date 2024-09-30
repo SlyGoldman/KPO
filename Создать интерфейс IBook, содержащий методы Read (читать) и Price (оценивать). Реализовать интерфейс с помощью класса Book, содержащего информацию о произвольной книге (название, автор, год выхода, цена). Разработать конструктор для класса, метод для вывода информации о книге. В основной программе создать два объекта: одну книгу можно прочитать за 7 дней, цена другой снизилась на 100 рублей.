@@ -1,0 +1,54 @@
+using System;
+
+interface IBook
+{
+    void Chtenie(int dni);
+    void Izmeneie_ceny(double stoimost);
+}
+
+class Book : IBook
+{
+    private string nazvanie;
+    private string avtor;
+    private int god_izdaniya;
+    private double cena;
+
+    public Book(string nazvanie, string avtor, int god_izdaniya, double cena)
+    {
+        this.nazvanie = nazvanie;
+        this.avtor = avtor;
+        this.god_izdaniya = god_izdaniya;
+        this.cena = cena;
+    }
+
+    public void Chtenie(int dni)
+    {
+        Console.WriteLine("Вы прочитали книгу за {0} дней", dni);
+    }
+
+    public void Izmeneie_ceny(double stoimost)
+    {
+        this.cena -= stoimost;
+        Console.WriteLine("Цена была снижена на {0} рублей. Новая цена: {1} рублей", stoimost, this.cena);
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine("Книга: {0} , {1}, Издана: {2}, Цена: {3} рублей", nazvanie, avtor, god_izdaniya, cena);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Book book1 = new Book("Пролетая над гнездом кукушки", "Кен Кизи", 1962, 500);
+        Book book2 = new Book("Убить пересмешника", "Харпер Ли", 1960, 700);
+
+        book1.Chtenie(7);
+        book2.Izmeneie_ceny(100);
+
+        book1.DisplayInfo();
+        book2.DisplayInfo();
+    }
+}
