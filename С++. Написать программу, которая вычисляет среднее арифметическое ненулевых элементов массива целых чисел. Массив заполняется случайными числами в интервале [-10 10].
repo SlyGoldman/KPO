@@ -1,0 +1,38 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+const int razmer = 10;
+int arr[razmer];
+
+srand(time(0)); 
+
+for (int i = 0; i < razmer; i++) {
+arr[i] = rand() % 21 - 10; 
+}
+
+cout << "Массив: ";
+for (int i = 0; i < razmer; i++) {
+cout << arr[i] << " ";
+}
+
+int sum = 0;
+int scetcik = 0;
+for (int i = 0; i < razmer; i++) {
+if (arr[i] != 0) {
+sum += arr[i];
+scetcik++;
+}
+}
+
+if (scetcik != 0) {
+double srednee = sum / scetcik;
+cout << "\nСреднее арифметическое ненулевых элементов: " << srednee << endl;
+} else {
+cout << "\nНенулевых элементов в массиве нет" << endl;
+}
+
+return 0;
+}
