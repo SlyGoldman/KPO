@@ -1,0 +1,47 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Выберите материал изготовления жалюзи:");
+        Console.WriteLine("1 - пластик");
+        Console.WriteLine("2 - алюминий");
+        Console.WriteLine("3 - соломка");
+        Console.WriteLine("4 - текстиль");
+
+        int material = int.Parse(Console.ReadLine());
+
+        double StoimostZaMetr = 0;
+
+        switch (material)
+        {
+            case 1:
+                StoimostZaMetr = 1000; 
+                break;
+            case 2:
+                StoimostZaMetr = 1500; 
+                break;
+            case 3:
+                StoimostZaMetr = 1200; 
+                break;
+            case 4:
+                StoimostZaMetr = 20000; 
+                break;
+            default:
+                Console.WriteLine("Неправильный выбор материала");
+                return;
+        }
+
+        Console.WriteLine("Введите ширину жалюзи (в метрах):");
+        double shirina = double.Parse(Console.ReadLine());
+
+        Console.WriteLine("Введите высоту жалюзи (в метрах):");
+        double visota = double.Parse(Console.ReadLine());
+
+        double ploshyad = shirina * visota;
+        double ObshayaStoimost = StoimostZaMetr * ploshyad;
+
+        Console.WriteLine("Стоимость жалюзи: " + ObshayaStoimost + " рублей");
+    }
+}
