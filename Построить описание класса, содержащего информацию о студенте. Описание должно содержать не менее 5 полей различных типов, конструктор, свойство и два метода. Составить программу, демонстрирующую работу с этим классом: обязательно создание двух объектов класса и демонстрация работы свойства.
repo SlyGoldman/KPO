@@ -1,0 +1,65 @@
+using System;
+
+class Student
+{
+    private string imya;
+    private int vozrast;
+    private string pol;
+    private double srednaya;
+    private bool genat;
+
+    public Student(string imya, int vozrast, string pol, double srednaya, bool genat)
+    {
+        this.imya = imya;
+        this.vozrast = vozrast;
+        this.pol = pol;
+        this.srednaya = srednaya;
+        this.genat = genat;
+    }
+
+    public string Imya
+    {
+        get { return imya; }
+        set { imya = value; }
+    }
+
+    public int Vozrast
+    {
+        get { return vozrast; }
+    }
+
+    public void PrintInfo()
+    {
+        Console.WriteLine("Имя: " + imya);
+        Console.WriteLine("Возраст: " + vozrast);
+        Console.WriteLine("Пол: " + pol);
+        Console.WriteLine("Средняя оценка: " + srednaya);
+        Console.WriteLine("Женат: " + (genat ? "Yes" : "No"));
+    }
+
+    public void Yvelichit_vozrast()
+    {
+        vozrast++;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Student student1 = new Student("Петя", 25, "М", 3.5, false);
+        Student student2 = new Student("Вася", 21, "М", 3.8, true);
+
+        student1.PrintInfo();
+
+        Console.WriteLine("Увеличен возраст: ");
+        student1.Yvelichit_vozrast();
+        student1.PrintInfo();
+        
+        student2.PrintInfo();
+
+        Console.WriteLine("Увеличен возраст: ");
+        student2.Yvelichit_vozrast();
+        student2.PrintInfo();
+    }
+}
