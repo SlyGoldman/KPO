@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void panel1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Button btn = new Button();
+                btn.Text = "Кнопка" + " " + i;
+                btn.Location = new Point(i * 25, i * 25);
+                panel2.Controls.Add(btn);
+            }
+        }
+
+        private void panel2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                TextBox txtBox = new TextBox();
+                txtBox.Text = "Текстбокс" + " " + i;
+                txtBox.Location = new Point(i * 25, i * 25);
+                panel3.Controls.Add(txtBox);
+            }
+        }
+
+        private void panel3_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Label lbl = new Label();
+                lbl.Text = "Лейбл" + " " + i;
+                lbl.Location = new Point(i * 25, i * 25);
+                panel1.Controls.Add(lbl);
+            }
+        }
+    }
+}
