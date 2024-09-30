@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int mesyac, den;
+    int dney_v_mesyavce[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int dnei_ostalos = 0;
+
+    cout << "Введите номер месяца: ";
+    cin >> mesyac;
+
+    cout << "Введите номер дня: ";
+    cin >> den;
+
+    for (int i = mesyac; i <= 12; i++) {
+        if (i == mesyac) {
+            dnei_ostalos += dney_v_mesyavce[i] - den;
+        } else {
+            dnei_ostalos += dney_v_mesyavce[i];
+        }
+    }
+
+    cout << "Дней до Нового года: " << dnei_ostalos << endl;
+
+    return 0;
+}
