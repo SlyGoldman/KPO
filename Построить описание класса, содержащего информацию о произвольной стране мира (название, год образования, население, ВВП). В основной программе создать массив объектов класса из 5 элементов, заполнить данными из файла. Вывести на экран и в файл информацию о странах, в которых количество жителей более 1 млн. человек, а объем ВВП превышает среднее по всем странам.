@@ -1,0 +1,62 @@
+using System;
+using System.IO;
+
+class Country
+{
+    public string Strana { get; set; }
+    public int God_osnovaniya { get; set; }
+    public int Naselenie { get; set; }
+    public double VVP { get; set; }
+
+    public Country(string strana, int god_osnovaniya, int naselenie, double vvp)
+    {
+        Strana = strana;
+        God_osnovaniya = god_osnovaniya;
+        Naselenie = naselenie;
+        VVP = vvp;
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Страна: {Strana}, Год основания: {God_osnovaniya}, Насление: {Naselenie} миллионов, ВВП: {VVP} триллионов рублей");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string[] lines = File.ReadAllLines("страны.txt");
+        Country[] countries = new Country[lines.Length];
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string[] data = lines[i].Split(',');
+            string strana = data[0];
+            int god_osnovaniya = int.Parse(data[1]);
+            int naselenie = int.Parse(data[2]);
+            double vvp = int.Parse(data[3]);
+            countries[i] = new Country(strana, god_osnovaniya, naselenie, vvp);
+        }
+
+        double totalVVP = 0;
+        foreach (var country in countries)
+        {
+            totalVVP += country.VVP;
+        }
+        double avgVVP = totalVVP / countries.Length;
+
+        Console.WriteLine("Страны с попоуляцией больше 1 миллиона и ВВВП выше среднего: ");
+        using (StreamWriter writer = new StreamWriter("выбранные_страны.txt"))
+        {
+            foreach (var country in countries)
+            {
+                if (country.Naselenie > 1 && country.VVP > avgVVP)
+                {
+                    country.DisplayInfo();
+                    writer.WriteLine($"{country.Strana}, {country.God_osnovaniya}, {country.Naselenie}, {country.VVP}");
+                }
+            }
+        }
+    }
+}
