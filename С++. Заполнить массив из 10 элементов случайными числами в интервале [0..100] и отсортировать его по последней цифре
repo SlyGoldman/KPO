@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+using namespace std;
+
+bool poslednaya_cifra(const int &a, const int &b) {
+    return (a % 10) < (b % 10);
+}
+
+int main() {
+    const int razmer = 10;
+    int arr[razmer];
+
+    srand(time(0));
+
+    for (int i = 0; i < razmer; i++) {
+        arr[i] = rand() % 101;
+    }
+
+    cout << "Исходный массив: ";
+    for (int i = 0; i < razmer; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    sort(arr, arr + razmer, poslednaya_cifra);
+
+    cout << "Отсортированный массив по последней цифре: ";
+    for (int i = 0; i < razmer; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
