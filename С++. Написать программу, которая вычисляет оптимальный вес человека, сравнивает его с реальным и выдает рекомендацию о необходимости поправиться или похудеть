@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    double rost, ves, norm_ves;
+
+    cout << "Введите ваш рост в СМ: ";
+    cin >> rost;
+    cout << "Введите ваш текущий вес в КГ: ";
+    cin >> ves;
+
+    norm_ves = rost - 100;
+
+    if (ves == norm_ves) {
+        cout << "Ваш вес в границах нормы" << endl;
+    } else if (ves < norm_ves) {
+        cout << "Вам нужно набрать " << norm_ves - ves << " КГ для достижения веса в границах нормы" << endl;
+    } else {
+        cout << "Вам нужно сбросить " << ves - norm_ves << " КГ для достижения веса в границах нормы" << endl;
+    }
+
+    return 0;
+}
