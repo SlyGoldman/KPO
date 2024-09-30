@@ -1,0 +1,11 @@
+#include <iostream>
+
+int main() 
+
+{
+    std::cout << "Вася" << std::endl;
+    std::cout << "  пошел" << std::endl;
+    std::cout << "    гулять." << std::endl;
+
+    return 0;
+}
