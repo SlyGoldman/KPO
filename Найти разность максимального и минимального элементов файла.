@@ -1,0 +1,20 @@
+using System;
+using System.IO;
+
+namespace raznost_iz_chisel_v_file
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string put_k_file =@"chisla.txt";
+            int[] numbers = File.ReadAllLines(put_k_file)
+                .Select(line => int.Parse(line))
+                .ToArray();
+            int max = numbers.Max();
+            int min = numbers.Min();
+            int raznost = max - min;
+            Console.WriteLine($"Разность между максимальным и минимальным элементами в текстовом файле: {raznost}");
+        }
+    }
+}
