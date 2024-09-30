@@ -1,0 +1,28 @@
+using System;
+using System.IO;
+
+namespace ContainsNumber
+{
+    class Program
+    {
+        static bool ContainsNumber(string filePath, int number)
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            foreach (string line in lines)
+            {
+                if (line.Contains(number.ToString()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        static void Main(string[] args)
+        {
+            string filePath = @"chisla.txt";
+            int number = 123;
+            bool containsNumber = ContainsNumber(filePath, number);
+            Console.WriteLine(containsNumber ? "Файл содержит заданное число" : "Файл не содержит заданное число");
+        }
+    }
+}
