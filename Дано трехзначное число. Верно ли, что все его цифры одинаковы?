@@ -1,0 +1,25 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Введите четырехзначное число:");
+        int number = Convert.ToInt32(Console.ReadLine());
+
+        int firstPart = number / 100; // Первые две цифры
+        int secondPart = number % 100; // Последние две цифры
+
+        int sumOfFirstPart = (firstPart / 10) + (firstPart % 10); // Сумма двух первых цифр
+        int sumOfSecondPart = (secondPart / 10) + (secondPart % 10); // Сумма двух последних цифр
+
+        if (sumOfFirstPart == sumOfSecondPart)
+        {
+            Console.WriteLine("Сумма двух первых цифр равна сумме двух последних.");
+        }
+        else
+        {
+            Console.WriteLine("Сумма двух первых цифр не равна сумме двух последних.");
+        }
+    }
+}
