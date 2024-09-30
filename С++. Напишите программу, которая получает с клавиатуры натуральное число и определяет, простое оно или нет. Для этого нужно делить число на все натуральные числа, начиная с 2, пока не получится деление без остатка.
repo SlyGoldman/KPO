@@ -1,0 +1,26 @@
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int chislo;
+    bool prostoe = true;
+
+    cout << "Введите натуральное число: ";
+    cin >> chislo;
+
+    for (int i = 2; i < chislo; i++) {
+        if (chislo % i == 0) {
+            prostoe = false;
+            break;
+        }
+    }
+
+    if (prostoe) {
+        cout << chislo << " - простое число" << endl;
+    } else {
+        cout << chislo << " - составное число" << endl;
+    }
+
+    return 0;
+}
