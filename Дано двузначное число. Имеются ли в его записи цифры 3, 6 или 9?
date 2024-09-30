@@ -1,0 +1,26 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Введите двузначное число:");
+        int number = Convert.ToInt32(Console.ReadLine());
+        
+        int pervoe = number / 10;
+        int vtoroe = number % 10;
+
+        if (pervoe == 3 || pervoe == 6 || pervoe == 9)
+        {
+            Console.WriteLine("Первая цифра в числе является 3, 6 или 9");
+        }
+        else if (vtoroe == 3 || vtoroe == 6 || vtoroe == 9)
+        {
+            Console.WriteLine("Вторая цифра в числе является 3, 6 или 9");
+        }
+        else
+        {
+            Console.WriteLine("В числе нет цифр 3, 6 или 9");
+        }
+    }
+}
