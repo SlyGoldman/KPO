@@ -1,0 +1,16 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double x = 5; // Вес в кг
+        double a = 500; // Цена за x кг
+        double y = 14; // Новый вес в кг
+
+        double cenazakg = a / x; // Цена за 1 кг
+        double vsyacena = y * cenazakg; // Общая цена за y кг
+
+        Console.WriteLine("Если " + x + " кг конфет стоит " + a + " рублей, то " + y + " кг конфет будет стоить " + vsyacena + " рублей.");
+    }
+}
