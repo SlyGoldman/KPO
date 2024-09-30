@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int chislo;
+
+    cout << "Введите целое число: ";
+    cin >> chislo;
+
+    int sostav;
+    bool ves_sostav = true;
+    int c = chislo;
+    while (c != 0) {
+        sostav = c % 10;
+        if (sostav % 2 != 0) {
+            ves_sostav = false;
+            break;
+        }
+        c /= 10;
+    }
+
+    if (ves_sostav) {
+        cout << "Все цифры в числе четные" << endl;
+    } else {
+        cout << "Не все цифры в числе четные" << endl;
+    }
+
+    return 0;
+}
