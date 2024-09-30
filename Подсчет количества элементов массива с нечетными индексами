@@ -1,0 +1,32 @@
+using System;
+
+namespace podchet_nechetnie
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] array = new int[10];
+            Random random = new Random();
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = random.Next(-100, 0);
+            }
+            int oddCount = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    oddCount++;
+                }
+            }
+            Console.WriteLine("Массив:");
+            foreach (int element in array)
+            {
+                Console.Write($"{element} ");
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Количество элементов с нечетными индексами: {oddCount}");
+        }
+    }
+}
