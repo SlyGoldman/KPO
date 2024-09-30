@@ -1,0 +1,16 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double kvartplata = 80; // начальная квартплата
+        double Pervoe_povishenie = 0.3; // первое повышение квартплаты на 30%
+        double Vtoroe_povishenie = 0.4; // второе повышение квартплаты на 40%
+
+        double kvartplata_posle_pervogo = kvartplata + kvartplata * Pervoe_povishenie; // стоимость после первого повышения
+        double kvartplata_posle_vtorogo = kvartplata_posle_pervogo + Pervoe_povishenie * Vtoroe_povishenie; // стоимость после второго повышения
+
+        Console.WriteLine("Семья Березовских платит сейчас {0} рублей в месяц.", kvartplata_posle_vtorogo);
+    }
+}
