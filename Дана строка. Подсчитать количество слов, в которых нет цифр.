@@ -1,0 +1,22 @@
+using System;
+using System.Linq;
+namespace podschet_slov
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string inputString = "Белеет парус одинокий в тумане2 моря голубом. Что ищет5 он в стране далекой? Что кинул6 он7 в краю родном?";
+            int count = 0;
+            string[] words = inputString.Split(' ');
+            foreach (string word in words)
+            {
+                if (!word.Any(char.IsDigit) == true)
+                {
+                    count++;
+                }
+            }
+            Console.WriteLine("Количество слов, в которых нет цифр: " + count);
+        }
+    }
+}
