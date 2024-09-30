@@ -1,0 +1,55 @@
+using System;
+
+interface IRectangle
+{
+    void vivesti_dlini();
+    bool proverka_na_kvadrat();
+}
+
+class Rectangle : IRectangle
+{
+    private int a;
+    private int b;
+
+    public Rectangle(int a, int b)
+    {
+        this.a = a;
+        this.b = b;
+    }
+
+    public void vivesti_dlini()
+    {
+        Console.WriteLine("Стороны прямоугольника: {0} и {1}", a, b);
+    }
+
+    public bool proverka_na_kvadrat()
+    {
+        if (a == b)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Rectangle pramougolnik_1 = new Rectangle(5, 5);
+        Rectangle pramougolnik_2 = new Rectangle(4, 6);
+        Rectangle pramougolnik_3 = new Rectangle(3, 3);
+
+        pramougolnik_1.vivesti_dlini();
+        Console.WriteLine("Это квадрат? " + pramougolnik_1.proverka_na_kvadrat());
+
+        pramougolnik_2.vivesti_dlini();
+        Console.WriteLine("Это квадрат? " + pramougolnik_2.proverka_na_kvadrat());
+
+        pramougolnik_3.vivesti_dlini();
+        Console.WriteLine("Это квадрат? " + pramougolnik_3.proverka_na_kvadrat());
+    }
+}
