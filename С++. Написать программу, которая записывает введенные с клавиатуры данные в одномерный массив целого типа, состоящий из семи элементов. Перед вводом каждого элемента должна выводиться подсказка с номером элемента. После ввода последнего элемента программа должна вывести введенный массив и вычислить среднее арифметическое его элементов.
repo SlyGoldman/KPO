@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int razmer = 7;
+    int arr[razmer];
+    
+    for (int i = 0; i < razmer; i++) {
+        cout << "Введите " << i+1 << "-й элемент: ";
+        cin >> arr[i];
+    }
+    
+    cout << "Введенный массив: ";
+    for (int i = 0; i < razmer; i++) {
+        cout << arr[i] << " ";
+    }
+    
+    int sum = 0;
+    for (int i = 0; i < razmer; i++) {
+        sum += arr[i];
+    }
+    
+    double srednee = sum / razmer;
+    cout << "\nСреднее арифметическое: " << srednee;
+    
+    return 0;
+}
