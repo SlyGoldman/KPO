@@ -1,0 +1,23 @@
+using System;
+
+namespace stroki
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string inputString = "Белеет парус одинокий в тумане моря голубом. Что ищет он в стране далекой? Что кинул он в краю родном?";
+            char startCharacter = 'Ч';
+            string newString = "";
+            string[] words = inputString.Split(' ');
+            foreach (string word in words)
+            {
+                if (word[0] == startCharacter)
+                {
+                    newString += word + " ";
+                }
+            }
+            Console.WriteLine("Новая строка: " + newString);
+        }
+    }
+}           
