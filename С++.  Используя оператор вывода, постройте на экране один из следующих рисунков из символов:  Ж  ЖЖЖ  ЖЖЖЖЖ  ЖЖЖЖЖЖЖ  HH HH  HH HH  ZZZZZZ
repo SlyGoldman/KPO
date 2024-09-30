@@ -1,0 +1,15 @@
+#include <iostream>
+
+int main() 
+
+{
+    std::cout << "   Ж " << std::endl;
+    std::cout << "  ЖЖЖ" << std::endl;
+    std::cout << " ЖЖЖЖЖ" << std::endl;
+    std::cout << "ЖЖЖЖЖЖЖ" << std::endl;
+    std::cout << " HH HH" << std::endl;
+    std::cout << " HH HH" << std::endl;
+    std::cout << "ZZZZZZ" << std::endl;
+
+    return 0;
+}
