@@ -1,0 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Poisk_slov
+{
+    static void Main()
+    {
+        List<string> strings = new List<string> { "yabloko", "banan", "apelsin", "abrikos" };
+        Console.WriteLine("Введите букву для фильтрации: ");
+        char inputChar = Console.ReadLine().ToLower()[0];
+        List<string> sortirovannie_slova = strings.Where(s => !string.IsNullOrEmpty(s) && s.ToLower()[0] == inputChar).ToList();
+        Console.WriteLine("Строки с одинаковой буквой в начале:");
+        foreach (string str in sortirovannie_slova)
+        {
+            Console.WriteLine(str);
+        }
+    }
+}
