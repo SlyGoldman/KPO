@@ -1,0 +1,12 @@
+org 100h
+begin:
+mov ah, 9
+mov dx,offset message1 
+int 21h
+mov dx,offset message2
+int 21h
+int 20h 
+ret
+message1 db "Petrov", 0dh, 0ah, '$' 
+message2 db "Group ISP-2-2002", 0dh, 0ah, '$' 
+end begin
