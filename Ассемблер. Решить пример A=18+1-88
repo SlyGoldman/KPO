@@ -1,0 +1,40 @@
+.model small
+
+.stack 100h  
+.code
+
+begin:
+
+    mov ax, 88
+    
+    inc ax
+    
+    sub ax, 18  
+
+OutInt proc
+    aam 
+    
+    add ax,3030h 
+    
+    mov dl,ah 
+    
+    mov dh,al 
+    
+    mov ah,02 
+    
+    int 21h 
+    
+    mov dl,dh 
+    
+    int 21h
+
+OutInt endp 
+    
+    mov ax,4c00h
+    
+    int 21h 
+
+.data
+
+   
+end begin
