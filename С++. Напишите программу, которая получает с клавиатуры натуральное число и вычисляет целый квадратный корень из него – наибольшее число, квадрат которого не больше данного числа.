@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int chislo;
+    cout << "Введите натуральное число: ";
+    cin >> chislo;
+
+    int result = 0;
+    while (result*result <= chislo) {
+        result++;
+    }
+    result--;
+
+    cout << "Целый квадратный корень из числа " << chislo << " равен " << result << endl;
+    return 0;
+}
