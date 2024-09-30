@@ -1,0 +1,85 @@
+using System;
+using System.Linq;
+class Computer
+{
+    public int God { get; set; }
+    public string OS { get; set; }
+    public int OZU { get; set; }
+    public decimal Cena { get; set; }
+
+    public Computer(int god, string os, int ozu, decimal cena)
+    {
+        God = god;
+        OS = os;
+        OZU = ozu;
+        Cena = cena;
+    }
+
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"Год: {God}, Операционная система: {OS}, Оперативная память: {OZU} ГБ, Цена: {Cena} рублей");
+    }
+}
+
+
+class Laptop : Computer
+{
+    public string Model { get; set; }
+
+    public Laptop(int god, string os, int ozu, decimal cena, string model) : base(god, os, ozu, cena)
+    {
+        Model = model;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"Ноутбук - Год: {God}, Операционная система: {OS}, Оперативная память: {OZU} ГБ, Цена: {Cena} рублей, Модель: {Model}");
+    }
+}
+
+
+class Desktop : Computer
+{
+    public string Marka { get; set; }
+
+    public Desktop(int god, string os, int ozu, decimal cena, string marka) : base(god, os, ozu, cena)
+    {
+        Marka = marka;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"ПК - Год: {God}, Операционная система: {OS}, Оперативная память: {OZU} ГБ, Цена: {Cena} рублей, Марка: {Marka}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Computer[] computers = new Computer[6];
+
+        computers[0] = new Laptop(2020, "Windows", 8, 80000, "Lenovo");
+        computers[1] = new Desktop(2019, "Windows", 16, 21000, "Dell");
+        computers[2] = new Laptop(2018, "MacOS", 16, 15000, "Apple");
+        computers[3] = new Desktop(2021, "Linux", 32, 18000, "HP");
+        computers[4] = new Laptop(2017, "Windows", 4, 6000, "Asus");
+        computers[5] = new Desktop(2020, "Windows", 8, 100000, "Acer");
+
+        decimal avgCena = computers.Sum(c => c.Cena) / computers.Length;
+
+        Console.WriteLine("Ноутбуки с ценой ниже среднего: ");
+        foreach (Computer c in computers)
+        {
+            if (c is Laptop && c.Cena > avgCena)
+                c.DisplayInfo();
+        }
+
+        Console.WriteLine("ПК, которые мы можем взять за 20000 рублей: ");
+        foreach (Computer c in computers)
+        {
+            if (c is Desktop && c.Cena <= 20000)
+                c.DisplayInfo();
+        }
+    }
+}
