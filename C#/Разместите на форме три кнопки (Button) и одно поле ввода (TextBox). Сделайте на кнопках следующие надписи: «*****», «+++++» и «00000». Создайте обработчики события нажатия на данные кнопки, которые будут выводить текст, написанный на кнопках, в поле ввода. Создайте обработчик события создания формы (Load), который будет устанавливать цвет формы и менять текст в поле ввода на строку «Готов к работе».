@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp15
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.BackColor = System.Drawing.Color.LightGray;
+            textBox1.Text = "Готов к работе";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            textBox1.Text = clickedButton.Text;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            textBox1.Text = clickedButton.Text;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            textBox1.Text = clickedButton.Text;
+        }
+    }
+}
