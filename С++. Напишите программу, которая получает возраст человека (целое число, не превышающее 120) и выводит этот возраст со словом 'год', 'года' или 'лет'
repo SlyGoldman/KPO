@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+int age;
+
+cout << "Введите возраст человека: ";
+cin >> age;
+
+if (age % 10 == 1 && age != 11) {
+cout << age << " год" << endl;
+} else if ((age % 10 == 2 || age % 10 == 3 || age % 10 == 4) && !(age % 100 >= 11 && age % 100 <= 14)) {
+cout << age << " года" << endl;
+} else {
+cout << age << " лет" << endl;
+}
+
+return 0;
+}
