@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+int heights[5];
+bool sorted = true;
+
+cout << "Введите рост пяти спортсменов через пробел: ";
+for (int i = 0; i < 5; i++) {
+cin >> heights[i];
+}
+
+for (int i = 0; i < 4; i++) {
+if (heights[i] > heights[i + 1]) {
+sorted = false;
+break;
+}
+}
+
+if (sorted) {
+cout << "По росту." << endl;
+} else {
+cout << "Не по росту!" << endl;
+}
+
+return 0;
+}
