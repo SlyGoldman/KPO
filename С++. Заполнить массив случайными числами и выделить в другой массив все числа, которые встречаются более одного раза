@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int razmer = 20;
+    int arr[razmer];
+    int scetcik[10] = {0};
+    int povtor_chisla[10];
+    int povtor_scetcik = 0;
+
+    for (int i = 0; i < razmer; i++) {
+        arr[i] = rand() % 10; 
+    }
+
+    for (int i = 0; i < razmer; i++) {
+        scetcik[arr[i]]++;
+    }
+
+    for (int i = 0; i < 10; i++) {
+        if (scetcik[i] > 1) {
+            povtor_chisla[povtor_scetcik] = i;
+            povtor_scetcik++;
+        }
+    }
+
+    cout << "Исходный массив: ";
+    for (int i = 0; i < razmer; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Числа, встречающиеся более одного раза: ";
+    for (int i = 0; i < povtor_scetcik; i++) {
+        cout << povtor_chisla[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
