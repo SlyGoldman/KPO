@@ -1,0 +1,43 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество команд:");
+        int n = int.Parse(Console.ReadLine());
+        int[] schet = new int[n];
+        string[] rezultat = new string[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine($"Введите количество очков для команды {i + 1}:");
+            schet[i] = int.Parse(Console.ReadLine());
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            if (schet[i] == 3)
+            {
+                rezultat[i] = "Команда " + (i + 1) + " победила!";
+            }
+            else if (schet[i] == 2)
+            {
+                rezultat[i] = "Команда " + (i + 1) + " сыграла вничью.";
+            }
+            else if (schet[i] == 0)
+            {
+                rezultat[i] = "Команда " + (i + 1) + " проиграла.";
+            }
+            else
+            {
+                rezultat[i] = "Команда " + (i + 1) + " получила " + schet[i] + " очков.";
+            }
+        }
+        
+        Console.WriteLine("Итоги игры:");
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine(rezultat[i]);
+        }
+    }
+}
