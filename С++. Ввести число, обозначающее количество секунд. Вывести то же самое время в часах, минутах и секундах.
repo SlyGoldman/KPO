@@ -1,0 +1,17 @@
+#include <iostream>
+
+int main() 
+
+{
+    int vsego_secund;
+    
+    std::cout << "Введите количество секунд: ";
+    std::cin >> vsego_secund;
+    int chasy = vsego_secund / 3600;
+    int minuty = (vsego_secund % 3600) / 60;
+    int secundy = vsego_secund % 60;
+
+    std::cout << "Время в формате ЧЧ:ММ:СС -> " << chasy << ":" << minuty << ":" << secundy << std::endl;
+
+    return 0;
+}
