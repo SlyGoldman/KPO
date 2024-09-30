@@ -1,0 +1,28 @@
+#include <iostream>
+#include <iomanip> 
+
+using namespace std;
+
+int main() {
+    int n; 
+    double pi = 0.0;
+    int znak = 1;
+    double razrad = 1.0; 
+    int count = 0; 
+
+    cout << "Введите точность вычисления числа Пи (количество членов ряда): ";
+    cin >> n;
+
+    while (count < n) {
+        pi += znak * razrad; 
+        znak *= -1; 
+        razrad = 1.0 / (2 * count + 1); 
+        count++; 
+    }
+
+    pi *= 4;
+
+    cout << "Число Пи с точностью " << n << " членов ряда: " << setprecision(15) << pi << endl;
+
+    return 0;
+}
