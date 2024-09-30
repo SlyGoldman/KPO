@@ -1,0 +1,186 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        private int[] numbers = new int[100];
+        private Random random = new Random();
+
+        public Form1()
+        {
+            InitializeComponent();
+            GenerateRandomNumbers();
+        }
+        private void GenerateRandomNumbers() // генератор
+        {
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                numbers[i] = random.Next(0, 1000);
+            }
+        }
+        private int LinearSearch(int[] array, int elementToFind) // простой поиск
+        {
+            int iterations = 0;
+            foreach (int element in array)
+            {
+                iterations++;
+                if (element == elementToFind)
+                {
+                    return iterations;
+                }
+            }
+            return 0;
+        }
+
+        private int BubbleSort(int[] array) // пузырек
+        {
+            int iterations = 0;
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                for (int j = 0; j < array.Length - i - 1; j++)
+                {
+                    iterations++;
+                    if (array[j] > array[j + 1])
+                    {
+                        int temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+                }
+            }
+            return iterations;
+        }
+
+        private int SelectionSort(int[] array) // сортировка выборкой
+        {
+            int iterations = 0;
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                int minIndex = i;
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    iterations++;
+                    if (array[j] < array[minIndex])
+                    {
+                        minIndex = j;
+                    }
+                }
+                int temp = array[minIndex];
+                array[minIndex] = array[i];
+                array[i] = temp;
+            }
+            return iterations;
+        }
+
+        private int QuickSort(int[] array, int start, int end) // быстрая сортировка
+        {
+            int iterations = 0;
+            if (start < end)
+            {
+                int pivotIndex = Partition(array, start, end, ref iterations);
+                iterations += QuickSort(array, start, pivotIndex - 1);
+                iterations += QuickSort(array, pivotIndex + 1, end);
+            }
+            return iterations;
+        }
+        private int Partition(int[] array, int start, int end, ref int iterations) // разделение массива на 2 части для быстрой сортировки
+        {
+            int pivot = array[end];
+            int i = (start - 1);
+
+            for (int j = start; j < end; j++)
+            {
+                iterations++;
+                if (array[j] <= pivot)
+                {
+                    i++;
+                    int temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+
+            int temp1 = array[i + 1];
+            array[i + 1] = array[end];
+            array[end] = temp1;
+            return i + 1;
+        }
+
+        private (bool found, int iterations) BinarySearch(int[] array, int value) // бинарный поиск
+        {
+            int left = 0;
+            int right = array.Length - 1;
+            int iterations = 0;
+
+            while (left <= right)
+            {
+                iterations++;
+                int middle = left + (right - left) / 2;
+
+                if (array[middle] == value)
+                    return (true, iterations);
+
+                if (array[middle] < value)
+                    left = middle + 1;
+                else
+                    right = middle - 1;
+            }
+
+            return (false, iterations);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // генерация и вывод массива случайных чисел
+            GenerateRandomNumbers();
+            textBox1.Text = string.Join(", ", numbers);
+            int searchValue = int.Parse(textBox2.Text); 
+            int[] sortedArray = (int[])numbers.Clone(); // сортировка массива для бинарного поиска
+            Array.Sort(sortedArray);
+            var (found1, iterations) = BinarySearch(sortedArray, searchValue);
+
+            // простой поиск вывод количества итераций
+            int linearSearchIterations = LinearSearch(numbers, searchValue);
+            textBox3.Text = linearSearchIterations.ToString();
+
+            // пузырек вывод количества итераций
+            int[] bubbleSortedArray = (int[])numbers.Clone();
+            int bubbleSortIterations = BubbleSort(bubbleSortedArray);
+            textBox4.Text = bubbleSortIterations.ToString();
+
+            // сортировка выборкой вывод количества итераций
+            int[] selectionSortedArray = (int[])numbers.Clone();
+            int selectionSortIterations = SelectionSort(selectionSortedArray);
+            textBox5.Text = selectionSortIterations.ToString();
+
+            // быстрая сортировка вывод количества итераций
+            int[] quickSortedArray = (int[])numbers.Clone();
+            int quickSortIterations = QuickSort(quickSortedArray, 0, quickSortedArray.Length - 1);
+            textBox6.Text = quickSortIterations.ToString();
+
+            // бинарный поиск результат и вывод количества итераций
+            if (found1)
+            {
+                textBox7.Text = $"Число {searchValue} найдено. Количество итераций: {iterations}";
+            }
+            else
+            {
+                textBox7.Text = $"Число {searchValue} не найдено. Количество итераций: {iterations}";
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
