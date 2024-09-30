@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    const int razmer = 10;
+    int arr[razmer];
+
+    srand(time(0));
+
+    for (int i = 0; i < razmer; i++) {
+        arr[i] = rand() % 101;
+    }
+
+    sort(arr, arr + razmer/2);
+
+    sort(arr + razmer/2, arr + razmer, greater<int>());
+
+    cout << "Отсортированный массив: ";
+    for (int i = 0; i < razmer; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
