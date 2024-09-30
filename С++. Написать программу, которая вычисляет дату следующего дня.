@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+
+bool visokGod(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+
+void sled_den(int& day, int& month, int& year) {
+    static int dney_v_mesace[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    
+    if (month == 2 && visokGod(year)) {
+        dney_v_mesace[2] = 29;
+    }
+    
+    day++;
+    if (day > dney_v_mesace[month]) {
+        day = 1;
+        month++;
+        if (month > 12) {
+            month = 1;
+            year++;
+        }
+    }
+}
+
+int main() {
+    int day, month, year;
+    cout << "Введите день месяца: ";
+    cin >> day;
+    cout << "Введите номер месяца: ";
+    cin >> month;
+    cout << "Введите год: ";
+    cin >> year;
+
+    sled_den(day, month, year);
+
+    cout << "Следующий день: " << day << "." << month << "." << year << endl;
+
+    return 0;
+}
