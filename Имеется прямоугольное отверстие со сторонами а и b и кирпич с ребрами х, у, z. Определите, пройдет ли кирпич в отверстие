@@ -1,0 +1,22 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите значение x: ");
+        double x = double.Parse(Console.ReadLine());
+        double rezultat;
+        
+        if (x <= 7)
+        {
+            rezultat = 3 * x - 9;
+        }
+        else
+        {
+            rezultat = 1 / (x * x - 4);
+        }
+
+        Console.WriteLine($"Значение функции F(x) = {rezultat}");
+    }
+}
