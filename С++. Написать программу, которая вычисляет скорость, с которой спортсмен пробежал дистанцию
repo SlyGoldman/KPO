@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    double distanciya, vremya;
+    cout << "Введите дистанцию (в метрах): ";
+    cin >> distanciya;
+    cout << "Введите время (в секундах): ";
+    cin >> vremya;
+
+    double skorostMs = distanciya / vremya;
+    double skorostKmH = (skorostMs * 3600) / 1000;
+    cout << "Скорость спортсмена: " << skorostKmH << " км/час" << endl;
+
+    return 0;
+}
