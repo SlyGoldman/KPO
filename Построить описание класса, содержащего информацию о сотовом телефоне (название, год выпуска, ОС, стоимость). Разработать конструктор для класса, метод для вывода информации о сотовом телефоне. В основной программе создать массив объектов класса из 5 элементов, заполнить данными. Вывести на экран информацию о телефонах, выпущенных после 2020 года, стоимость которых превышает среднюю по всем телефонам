@@ -1,0 +1,57 @@
+using System;
+
+class CellPhone
+{
+    public string Name { get; set; }
+    public int Year { get; set; }
+    public string OS { get; set; }
+    public double Price { get; set; }
+
+    public CellPhone(string name, int year, string os, int price)
+    {
+        Name = name;
+        Year = year;
+        OS = os;
+        Price = price;
+    }
+
+    public void ShowInfo()
+    {
+        Console.WriteLine("Название устройства: " + Name);
+        Console.WriteLine("Год выпуска: " + Year);
+        Console.WriteLine("OS: " + OS);
+        Console.WriteLine("Цена: " + Price);
+        Console.WriteLine();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        CellPhone[] phones = new CellPhone[5];
+
+        phones[0] = new CellPhone("iPhone 12", 2020, "iOS", 60000);
+        phones[1] = new CellPhone("Samsung Galaxy S21", 2021, "Android", 65000);
+        phones[2] = new CellPhone("Google Pixel 5", 2020, "Android", 59000);
+        phones[3] = new CellPhone("OnePlus 9", 2021, "Android", 61000);
+        phones[4] = new CellPhone("Xiaomi Mi 11", 2021, "Android", 45000);
+
+        double totalPrice = 0;
+        int count = 0;
+
+        foreach (CellPhone phone in phones)
+        {
+            if (phone.Year > 2020)
+            {
+                if (phone.Price > (totalPrice / (count == 0 ? 1 : count)))
+                {
+                    phone.ShowInfo();
+                }
+
+                totalPrice += phone.Price;
+                count++;
+            }
+        }
+    }
+}
