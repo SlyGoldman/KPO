@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace WindowsFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private double CalculateValue(int n, double x)
+        {
+            return n / Math.Pow(x, n);
+        }
+
+        private double AddTwo(double x, int i = 1)
+        {
+            if (i > 10) return 1;
+            return i / Math.Pow(x, i) * Math.PI;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int n = Convert.ToInt32(textBox1.Text);
+            double x = Convert.ToDouble(textBox2.Text); 
+
+            double calculationResult = CalculateValue(n, x);
+            double finalResult = AddTwo(calculationResult);
+
+            textBox3.Text = finalResult.ToString();
+        }
+    }
+}
