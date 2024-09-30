@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int NOD(int a, int b) {
+    while (b != 0) {
+        int vrem = b;
+        b = a % b;
+        a = vrem;
+    }
+    return a;
+}
+
+int main() {
+    int chislo1, chislo2;
+    cout << "Введите два натуральных числа через пробел: ";
+    cin >> chislo1 >> chislo2;
+
+    int nod = NOD(chislo1, chislo2);
+
+    cout << "Наибольший общий делитель чисел " << chislo1 << " и " << chislo2 << " будет: " << nod << endl;
+
+    return 0;
+}
