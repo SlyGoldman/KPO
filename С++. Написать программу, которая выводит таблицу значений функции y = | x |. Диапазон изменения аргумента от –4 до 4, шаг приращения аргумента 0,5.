@@ -1,0 +1,19 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    double x = -4.0;
+    double shag = 0.5;
+
+    cout << " x   и   y " << endl;
+
+    while (x <= 4.0) {
+        double y = abs(x);
+        cout << x << "\t" << y << endl;
+        x += shag;
+    }
+
+    return 0;
+}
