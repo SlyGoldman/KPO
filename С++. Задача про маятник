@@ -1,0 +1,27 @@
+#include <iostream>
+#include <cmath>
+
+int main() 
+
+{
+    double A, k, f, t1, A1;
+    
+    // Ввод данных
+    std::cout << "Введите значение k: ";
+    std::cin >> k;
+    std::cout << "Введите значение частоты колебаний f: ";
+    std::cin >> f;
+    std::cout << "Введите значение времени t1: ";
+    std::cin >> t1;
+    std::cout << "Введите значение координаты маятника в момент времени t1 (A1): ";
+    std::cin >> A1;
+
+
+    double g = asin(1/k);
+
+    A = A1 / sin(f * t1 + g);
+
+    std::cout << "Амплитуда колебаний A = " << A << std::endl;
+
+    return 0;
+}
