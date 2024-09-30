@@ -1,0 +1,66 @@
+using System;
+
+namespace Zadacha_s_massivom
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] array = new int[10, 10];
+            Random random = new Random();
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    array[i, j] = random.Next(-10, 10);
+                }
+            }
+            Console.Write("Введите нижнюю границу интервала: ");
+            int a = int.Parse(Console.ReadLine());
+            Console.Write("Введите верхнюю границу интервала: ");
+            int z = int.Parse(Console.ReadLine());
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                int podschet = 0;
+                int summa = 0;
+
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] >= a && array[i, j] <= z)
+                    {
+                        podschet++;
+                    }
+
+                    if (array[i, j] > 0 && array[i, j] % 2 != 0)
+                    {
+                        summa += array[i, j];
+                    }
+                }
+                Console.WriteLine($"Строка {i}:");
+                Console.WriteLine($"Количество элементов в интервале от {a} до {z}: {podschet}");
+                Console.WriteLine($"Сумма нечетных положительных элементов: {summa}");
+            }
+            for (int j = 0; j < array.GetLength(1); j++)
+            {
+                int podschet = 0;
+                int summa = 0;
+
+                for (int i = 0; i < array.GetLength(0); i++)
+                {
+                    if (array[i, j] >= a && array[i, j] <= z)
+                    {
+                        podschet++;
+                    }
+
+                    if (array[i, j] > 0 && array[i, j] % 2 != 0)
+                    {
+                        summa += array[i, j];
+                    }
+                }
+                Console.WriteLine($"Столбец {j}:");
+                Console.WriteLine($"Количество элементов в интервале от {a} до {z}: {podschet}");
+                Console.WriteLine($"Сумма нечетных положительных элементов: {summa}");
+            }
+        }
+    }
+}
