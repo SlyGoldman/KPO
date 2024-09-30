@@ -1,1 +1,22 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
 
+int main() {
+    double summ = 1.0;
+    double razrad = 2.0;
+    double slogaemoe = 1.0;
+    double tocnost = 0.001;
+    int znamenatel = 3;
+
+    while (fabs(razrad) >= tocnost) {
+        summ = summ + slogaemoe * razrad;
+        razrad = 2 * pow(-1, (znamenatel - 1) / 2) / (znamenatel * pow(3, (znamenatel - 1) / 2));
+        slogaemoe = -1 * slogaemoe;
+        znamenatel = znamenatel + 2;
+    }
+
+    cout << "Сумма элементов последовательности с точностью 0.001: " << summ << endl;
+
+    return 0;
+}
