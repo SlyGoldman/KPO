@@ -1,0 +1,20 @@
+.model tiny
+.code
+org 100h
+begin:
+mov ax,333
+mov bx, 223
+add ax,bx
+xor bx,bx
+mov bx,16
+sub ax,bx
+mov cx,ax
+Label1:
+mov ah,9
+mov dx,offset String
+int 21h
+dec cx
+jnz Label1
+ret
+string db "Good Bye",13,10,"$"
+end begin
