@@ -1,0 +1,21 @@
+#include <iostream>
+
+int main() 
+
+{
+    double razmerMB, razmerGB;
+    int razmer_foto;
+
+    std::cout << "Введите размер одной фотографии в Мбайтах: ";
+    std::cin >> razmerMB;
+
+    razmerGB = 2.0;
+    
+    double razmer_fleshkiMB = razmerGB * 1024;
+
+    razmer_foto = razmer_fleshkiMB / razmerMB;
+
+    std::cout << "На флэш-карту объемом 2 Гбайта поместится " << razmer_foto << " фотографий" << std::endl;
+
+    return 0;
+}
