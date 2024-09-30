@@ -1,0 +1,118 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp10
+{
+    public partial class Form1 : Form
+    {
+        private readonly string msgdialog = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = msgdialog
+            };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    pictureBox1.Image = new Bitmap(ofd.FileName);
+
+                }
+                catch
+                {
+                    MessageBox.Show("Невозможно открыть выбранный файл", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void ConvertImage()
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap input = new Bitmap(pictureBox1.Image);
+                Bitmap output_r = new Bitmap(input.Width, input.Height);
+                Bitmap output_g = new Bitmap(input.Width, input.Height);
+                Bitmap output_b = new Bitmap(input.Width, input.Height);
+                for (int j = 0; j < input.Height; j++)
+                    for (int i = 0; i < input.Width; i++)
+                    {
+                        Color col = input.GetPixel(i, j);
+                        int R = col.R;
+                        int G = col.G;
+                        int B = col.B;
+                        if (checkBox1.Checked)
+                        {
+                            output_r.SetPixel(i, j, Color.FromArgb(R, R, R));
+                            output_g.SetPixel(i, j, Color.FromArgb(G, G, G));
+                            output_b.SetPixel(i, j, Color.FromArgb(B, B, B));
+                        }
+                        else
+                        {
+                            output_r.SetPixel(i, j, Color.FromArgb(R, 0, 0));
+                            output_g.SetPixel(i, j, Color.FromArgb(0, G, 0));
+                            output_b.SetPixel(i, j, Color.FromArgb(0, 0, B));
+                        }
+                    }
+                pictureBox2.Image = output_r;
+                pictureBox3.Image = output_g;
+                pictureBox4.Image = output_b;
+                pictureBox2.Visible = radioButton1.Checked;
+                pictureBox3.Visible = radioButton2.Checked;
+                pictureBox4.Visible = radioButton3.Checked;
+            }
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            ConvertImage();
+        }
+
+        private void RadioButtons_CheckedChanged(object sender, EventArgs e)
+        {
+            pictureBox2.Visible = radioButton1.Checked;
+            pictureBox3.Visible = radioButton2.Checked;
+            pictureBox4.Visible = radioButton3.Checked;
+        }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            ConvertImage();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            if (pictureBox2.Image != null)
+            {
+                SaveFileDialog sfd = new SaveFileDialog
+                {
+                    Title = "Сохранить картинку как...",
+                    OverwritePrompt = true,
+                    CheckPathExists = true,
+                    Filter = msgdialog,
+                    ShowHelp = true
+                };
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        if (radioButton1.Checked) pictureBox2.Image.Save(sfd.FileName);
+                        if (radioButton2.Checked) pictureBox3.Image.Save(sfd.FileName);
+                        if (radioButton3.Checked) pictureBox4.Image.Save(sfd.FileName);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+    }
+}
