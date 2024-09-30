@@ -1,0 +1,23 @@
+.model tiny
+.code
+org 100h
+begin:
+mov CX,<1>
+mov BX,<2>
+test cx, bx
+jne label2
+je label1
+ret
+label1:
+mov ah,9
+mov dx,offset string
+int 21h
+ret
+String db "odno iz chisel ravno 0$"
+label2:
+mov ah,9
+mov dx,offset string1
+int 21h
+ret
+string1 db "ne ravni 0$"
+end begin
