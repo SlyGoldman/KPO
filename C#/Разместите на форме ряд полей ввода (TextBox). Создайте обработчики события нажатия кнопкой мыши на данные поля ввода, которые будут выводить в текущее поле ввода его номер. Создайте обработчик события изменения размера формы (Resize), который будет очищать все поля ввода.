@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp16
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            InitializeTextBoxes();
+        }
+
+        private void InitializeTextBoxes()
+        {
+            for (int i = 1; i < 4; i++)
+            {
+                TextBox textBox = new TextBox();
+                textBox.Name = "textBox" + i;
+                textBox.Location = new System.Drawing.Point(225, 50 + i * 30);
+                textBox.Size = new System.Drawing.Size(350, 20);
+                textBox.MouseDown += TextBox_MouseDown;
+                this.Controls.Add(textBox);
+            }
+        }
+
+        private void TextBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            int index = int.Parse(textBox.Name.Replace("textBox", ""));
+            textBox.Text = index.ToString();
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control is TextBox)
+                {
+                    TextBox textBox = (TextBox)control;
+                    textBox.Clear();
+                }
+            }
+        }
+    }
+}
+
