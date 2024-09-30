@@ -1,0 +1,22 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() 
+{
+double summa, srok, vremya;
+cout << "Введите сумму вклада: ";
+cin >> summa;
+cout << "Введите процентную ставку (в годовых): ";
+cin >> srok;
+cout << "Введите срок вклада (в месяцах): ";
+cin >> vremya;
+
+double doxod = summa * (srok / 100) * (vremya / 12);
+double vsego = summa + doxod;
+
+cout << "Доход по вкладу: " << doxod << " рублей" << endl;
+cout << "Итоговая сумма по вкладу: " << vsego << " рублей" << endl;
+
+return 0;
+}
