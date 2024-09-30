@@ -1,0 +1,28 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+double Y(double x) {
+    return -2.4 * x * x + 5 * x - 3;
+}
+
+int main() {
+    double x1, x2, shag;
+
+    cout << "Введите начальное значение x: ";
+    cin >> x1;
+    cout << "Введите конечное значение x: ";
+    cin >> x2;
+    cout << "Введите шаг изменения аргумента: ";
+    cin >> shag;
+    
+    double x = x1;
+    do {
+        double y = Y(x);
+        cout << setw(8) << fixed << setprecision(2) << x << setw(8) << fixed << setprecision(2) << y << endl;
+        x += shag;
+    } while (x <= x2);
+
+    return 0;
+}
