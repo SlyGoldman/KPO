@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+int chislo;
+
+cout << "Введите целое число: ";
+cin >> chislo;
+
+if (chislo >= 100 && chislo <= 999) {
+cout << "Число состоит из трех цифр" << endl;
+} else {
+cout << "Число не состоит из трех цифр" << endl;
+}
+
+return 0;
+}
