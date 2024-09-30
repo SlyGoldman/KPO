@@ -1,0 +1,11 @@
+.model tiny
+org 100h
+.data
+number dw 0A1h
+.code
+.start
+mov ax, 000Fh   
+or ax, number  
+mov ax, 4C00h
+int 21h
+end
