@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() 
+{
+string name1, name2, name3;
+int age1, age2, age3;
+
+cout << "Введите имя и возраст первого человека через пробел: ";
+cin >> name1 >> age1;
+cout << "Введите имя и возраст второго человека через пробел: ";
+cin >> name2 >> age2;
+cout << "Введите имя и возраст третьего человека через пробел: ";
+cin >> name3 >> age3;
+
+if (age1 > age2 && age1 > age3) {
+cout << name1 << " старше всех" << endl;
+} else if (age2 > age1 && age2 > age3) {
+cout << name2 << " старше всех" << endl;
+} else if (age3 > age1 && age3 > age2) {
+cout << name3 << " старше всех" << endl;
+} else {
+cout << "У них одинаковый возраст" << endl;
+}
+
+return 0;
+}
