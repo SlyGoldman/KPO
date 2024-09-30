@@ -1,0 +1,13 @@
+.model tiny
+.code
+org 100h
+Label1:
+mov ah,9
+mov dx,offset String
+int 21h
+jmp Label1
+add cx,12
+dec cx 
+ret
+string db "PRIVET",13,10,"$"
+end begin
