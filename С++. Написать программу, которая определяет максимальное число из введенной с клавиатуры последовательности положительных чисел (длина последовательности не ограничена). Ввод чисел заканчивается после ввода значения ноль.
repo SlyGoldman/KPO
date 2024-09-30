@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+int main() {
+    double chislo;
+    double max_chislo = 0;
+
+    do {
+        cout << "Введите положительное число (для завершения введите 0): ";
+        cin >> chislo;
+
+        if (chislo > max_chislo) {
+            max_chislo = chislo;
+        }
+    } while (chislo != 0);
+
+    if (max_chislo != 0) {
+        cout << "Максимальное число: " << max_chislo << endl;
+    } else {
+        cout << "Вы не ввели положительных чисел" << endl;
+    }
+    return 0;
+}
