@@ -1,0 +1,55 @@
+using System;
+
+class Money
+{
+    private int first;  
+    private int second; 
+
+    public Money(int first, int second)
+    {
+        this.first = first;
+        this.second = second;
+    }
+
+    public void PrintInfo()
+    {
+        Console.WriteLine("Номинал купюры: " + first);
+        Console.WriteLine("Количество купюр: " + second);
+    }
+
+    public bool CanBuy(int price)
+    {
+        if (first * second >= price)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Money money1 = new Money(100, 5);
+        Money money2 = new Money(500, 3);
+        Money money3 = new Money(1000, 2);
+
+        Console.WriteLine("Данные о первом объекте:");
+        money1.PrintInfo();
+        Console.WriteLine("Данные о втором объекте:");
+        money2.PrintInfo();
+        Console.WriteLine("Данные о третьем объекте:");
+        money3.PrintInfo();
+
+        int price = 800;
+
+        Console.WriteLine("Хватит ли денежных средств на покупку товара на сумму " + price + " рублей?");
+        Console.WriteLine("Для первого объекта: " + money1.CanBuy(price));
+        Console.WriteLine("Для второго объекта: " + money2.CanBuy(price));
+        Console.WriteLine("Для третьего объекта: " + money3.CanBuy(price));
+    }
+}
