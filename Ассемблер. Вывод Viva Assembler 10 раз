@@ -1,0 +1,14 @@
+.model tiny          
+.code
+org 100h            
+main:
+  mov cx, 10        
+  mov ah, 9
+  mov dx, offset String
+PrintLoop:
+  int 21h         
+  loop PrintLoop    
+  mov ah, 4ch      
+  int 21h          
+String db "VIVA ASSEMBLER", 0Dh, 0Ah, "$"
+end main
