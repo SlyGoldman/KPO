@@ -1,0 +1,52 @@
+namespace WinFormsApp1
+{
+    public partial class Konverty : Form
+    {
+        public Konverty()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int a, b, c, d;
+            a = Convert.ToInt32(textBox1.Text);
+            b = Convert.ToInt32(textBox2.Text);
+            c = Convert.ToInt32(textBox3.Text);
+            d = Convert.ToInt32(textBox4.Text);
+            if ((a < c && b < d) || (a < d && b < c))
+            {
+                label1.Text = "Один конверт можно вложить в другой";
+            }
+            else
+            {
+                label1.Text = "Один конверт нельзя вложить в другой";
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
