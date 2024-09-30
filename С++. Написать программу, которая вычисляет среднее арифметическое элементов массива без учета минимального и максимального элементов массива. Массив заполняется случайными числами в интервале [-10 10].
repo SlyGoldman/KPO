@@ -1,0 +1,51 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    const int razmer = 10;
+    int arr[razmer];
+
+    srand(time(0));
+
+    for (int i = 0; i < razmer; i++) {
+        arr[i] = rand() % 21 - 10;
+    }
+
+    cout << "Массив: ";
+    for (int i = 0; i < razmer; i++) {
+        cout << arr[i] << " ";
+    }
+
+    int min = arr[0];
+    int max = arr[0];
+
+
+    for (int i = 1; i < razmer; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        } else if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+
+    int sum = 0;
+    int scetchik = 0;
+
+    for (int i = 0; i < razmer; i++) {
+        if (arr[i] != min && arr[i] != max) {
+            sum += arr[i];
+            scetchik++;
+        }
+    }
+
+    if (scetchik != 0) {
+        double srednee = sum / scetchik;
+        cout << "\nСреднее арифметическое элементов без учета минимального и максимального: " << srednee << endl;
+    } else {
+        cout << "\nВсе элементы массива являются минимальными или максимальными" << endl;
+    }
+
+    return 0;
+}
