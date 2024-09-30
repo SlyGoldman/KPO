@@ -1,0 +1,38 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    const int razmer = 10;
+    int arr[razmer];
+
+    srand(time(0));
+    bool vozrastanie = true;
+
+
+    for (int i = 0; i < razmer; i++) {
+        arr[i] = rand() % 21 - 10;
+    }
+
+    cout << "Массив: ";
+    for (int i = 0; i < razmer; i++) {
+        cout << arr[i] << " ";
+    }
+
+
+    for (int i = 1; i < razmer; i++) {
+        if (arr[i] <= arr[i-1]) {
+            vozrastanie = false;
+            break;
+        }
+    }
+
+    if (vozrastanie) {
+        cout << "\nМассив представляет возрастающую последовательность" << endl;
+    } else {
+        cout << "\nМассив НЕ представляет возрастающую последовательность" << endl;
+    }
+
+    return 0;
+}
