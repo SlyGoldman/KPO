@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    double mosh, napr, tek_poterbl;
+
+    cout << "Введите мощность электроприбора: ";
+    cin >> mosh;
+    cout << "Введите напряжение электроприбора: ";
+    cin >> napr;
+
+    if(napr != 0) {
+        tek_poterbl = mosh / napr;
+        cout << "Текущая величина тока электроприбора " << tek_poterbl << "А" << endl;
+    } else {
+        cout << "Ошибка! Напряжение не должно быть равно нулю" << endl;
+    }
+
+    return 0;
+}
