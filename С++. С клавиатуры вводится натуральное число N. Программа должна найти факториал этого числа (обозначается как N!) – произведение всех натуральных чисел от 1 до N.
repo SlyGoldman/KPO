@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int chislo;
+    int factorial = 1;
+
+    cout << "Введите натуральное число: ";
+    cin >> chislo;
+
+    if (chislo < 0) {
+        cout << "Факториал отрицательных чисел не определяется" << endl;
+    } else {
+        for (int i = 1; i <= chislo; ++i) {
+            factorial *= i;
+        }
+        cout << "Факториал числа " << chislo << " равен " << factorial << endl;
+    }
+
+    return 0;
+}
