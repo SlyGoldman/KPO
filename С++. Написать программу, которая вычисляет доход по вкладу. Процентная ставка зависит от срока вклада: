@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+double summ, procent, mesacy, doxod;
+
+cout << "Введите сумму вклада: ";
+cin >> summ;
+cout << "Введите срок вклада (3, 6, 12, 18, 24 или 36 месяцев): ";
+cin >> mesacy;
+
+if (mesacy == 3) {
+procent = 9.0;
+} else if (mesacy == 6) {
+procent = 11.5;
+} else if (mesacy == 12) {
+procent = 13.5;
+} else if (mesacy == 18) {
+procent = 15.0;
+} else if (mesacy == 24) {
+procent = 18.0;
+} else if (mesacy == 36) {
+procent = 24.0;
+} else {
+cout << "Вы ввели неверный срок" << endl;
+return 0;
+}
+
+doxod = (summ * procent * mesacy) / (12 * 100);
+cout << "Доход по вкладу " << doxod << " рублей" << endl;
+
+return 0;
+}
