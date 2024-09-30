@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+int dva_poisk(int arr[], int razmer, int x) {
+    int shagi = 0;
+    int sleva = 0;
+    int sprava = razmer - 1;
+    while (sleva <= sprava) {
+        shagi++;
+        int seredina = sleva + (sprava - sleva) / 2;
+        if (arr[seredina] == x) {
+            return shagi;
+        } else if (arr[seredina] < x) {
+            sleva = seredina + 1;
+        } else {
+            sprava = seredina - 1;
+        }
+    }
+    return shagi;
+}
+
+int main() {
+    int arr[32];
+    for (int i = 0; i < 32; i++) {
+        arr[i] = rand() % 101;
+    }
+
+    int vsego_shagov = 0;
+    int chisla = 1000;
+    for (int i = 0; i < chisla; i++) {
+        int v_poiska = rand() % 101; 
+        
+        for (int j = 0; j < 32; j++) {
+            for (int k = j + 1; k < 32; k++) {
+                if (arr[j] > arr[k]) {
+                    int vremannii = arr[j];
+                    arr[j] = arr[k];
+                    arr[k] = vremannii;
+                }
+            }
+        }
+        vsego_shagov += dva_poisk(arr, 32, v_poiska);
+    }
+    float srednee_shagov = (float)vsego_shagov / chisla;
+    cout << "Среднее число шагов для двоичного поиска: " << srednee_shagov << endl;
+    return 0;
+}
