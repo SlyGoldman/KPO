@@ -1,0 +1,52 @@
+using System;
+
+class Computer
+{
+    public int God { get; set; }
+    public string OS { get; set; }
+    public int RAM { get; set; }
+    public double Cena { get; set; }
+
+    public Computer(int god, string os, int ram, double cena)
+    {
+        God = god;
+        OS = os;
+        RAM = ram;
+        Cena = cena;
+    }
+
+    public void PrintInfo()
+    {
+        Console.WriteLine($"Год: {God}, OS: {OS}, RAM: {RAM} GB, Цена: {Cena} рублей");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Computer[] computers = new Computer[5];
+
+        computers[0] = new Computer(2012, "Windows 7", 8, 800);
+        computers[1] = new Computer(2015, "Windows 10", 16, 1200);
+        computers[2] = new Computer(2010, "Windows XP", 4, 500);
+        computers[3] = new Computer(2013, "Windows 8", 12, 10000000);
+        computers[4] = new Computer(2018, "MacOS", 32, 2000);
+
+        double obshaya_cena = 0;
+        foreach (Computer comp in computers)
+        {
+            obshaya_cena += comp.Cena;
+        }
+        double srednaya_cena = obshaya_cena / computers.Length;
+
+        Console.WriteLine("Компьютеры, выпущенные до 2014 года с ценой выше среднего: ");
+        foreach (Computer comp in computers)
+        {
+            if (comp.God < 2014 && comp.Cena > srednaya_cena)
+            {
+                comp.PrintInfo();
+            }
+        }
+    }
+}
