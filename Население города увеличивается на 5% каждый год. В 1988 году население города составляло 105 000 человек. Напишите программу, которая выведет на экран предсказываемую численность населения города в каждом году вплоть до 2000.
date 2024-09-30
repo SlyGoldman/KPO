@@ -1,0 +1,27 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int nachalnii_god = 1989;
+        int konechii_god = 2000;
+        int nachalnaya_populaciya = 105000;
+        double skorost_rosta = 0.05;
+
+        int tekyshii_god = nachalnii_god;
+        double populyaciya = nachalnaya_populaciya;
+
+        Console.WriteLine("Предсказываемая численность населения города:");
+
+        while (tekyshii_god <= konechii_god)
+        {
+            populyaciya = populyaciya * (1 + skorost_rosta);
+            Console.WriteLine($"Год: {tekyshii_god}. Население: {populyaciya:F0} человек");
+
+            tekyshii_god++;
+        }
+
+        Console.ReadLine();
+    }
+}
