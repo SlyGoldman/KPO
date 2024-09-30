@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+double vkladSumm;
+double vkladPeriod;
+
+cout << "Введите сумму вклада: ";
+cin >> vkladSumm;
+cout << "Введите срок депозита (в месяцах): ";
+cin >> vkladPeriod;
+
+double doxod;
+
+if (vkladSumm < 5000) {
+doxod = 0.09;
+} else if (vkladSumm < 10000) {
+doxod = 0.11;
+} else {
+doxod = 0.13;
+}
+
+double konec = vkladSumm * doxod * (vkladPeriod/12);
+
+cout << "Доход с вклада будет " << konec << " рублей"<< endl;
+
+return 0;
+}
