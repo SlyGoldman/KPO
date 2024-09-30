@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+int nod(int a, int b)
+{
+    while (a != b)
+    {
+        if (a > b)
+            a = a - b;
+        else
+            b = b - a;
+    }
+    return a;
+}
+
+int main()
+{
+    int chislo1, chislo2;
+    cout << "Введите два натуральных числа: ";
+    cin >> chislo1 >> chislo2;
+
+    int shagi = 0;
+    int result = nod(chislo1, chislo2);
+    cout << "НОД чисел " << chislo1 << " и " << chislo2 << " с использованием обычного алгоритма Евклида: " << result << endl;
+
+    cout << "Введите два натуральных числа: ";
+    cin >> chislo1 >> chislo2;
+
+    int a = chislo1, b = chislo2;
+    while (a != 0 && b != 0)
+    {
+        if (a > b)
+            a = a % b;
+        else
+            b = b % a;
+        shagi++;
+    }
+    result = (a == 0) ? b : a;
+
+    cout << "НОД чисел " << chislo1 << " и " << chislo2 << " с использованием модифицированного алгоритма Евклида: " << result << endl;
+    cout << "Число шагов: " << shagi << endl;
+
+    return 0;
+}
