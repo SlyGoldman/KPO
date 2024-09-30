@@ -1,0 +1,15 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double a = 9; // Длина ребра куба
+
+        double V = Math.Pow(a, 3); // Вычисление объема куба
+        double Sobyoma = 6 * Math.Pow(a, 2); // Вычисление площади полной поверхности куба
+
+        Console.WriteLine("Объем куба: " + V);
+        Console.WriteLine("Площадь полной поверхности куба: " + Sobyoma);
+    }
+}
