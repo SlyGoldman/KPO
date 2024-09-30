@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double distance(double x1, double y1, double x2, double y2) {
+    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+}
+
+int main() {
+    double x1, y1, x2, y2, x3, y3;
+    cout << "Введите координаты первой вершины треугольника (x1 y1) через пробел: ";
+    cin >> x1 >> y1;
+    cout << "Введите координаты второй вершины треугольника (x2 y2) через пробел: ";
+    cin >> x2 >> y2;
+    cout << "Введите координаты третьей вершины треугольника (x3 y3) через пробел: ";
+    cin >> x3 >> y3;
+
+    double a, b, c;
+    a = distance(x1, y1, x2, y2);
+    b = distance(x2, y2, x3, y3);
+    c = distance(x3, y3, x1, y1);
+
+    double s = 0.5 * fabs((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1));
+
+    cout << "Площадь треугольника: " << s << endl;
+
+    return 0;
+}
