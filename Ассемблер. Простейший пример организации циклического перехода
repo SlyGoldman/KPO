@@ -1,0 +1,13 @@
+model tiny
+.code
+org 100h
+begin:
+    mov cx,10
+    label1:
+    mov ah,9
+    mov dx,offset String
+    int 21h
+    loop label1
+    ret
+    string db 'privet $'
+end begin   
