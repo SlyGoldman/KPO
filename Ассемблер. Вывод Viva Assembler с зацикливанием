@@ -1,0 +1,19 @@
+.model tiny
+.code
+org 100h
+Label1:
+mov ah,9
+mov dx,offset String
+int 21h
+jmp Label1
+mov ax,100
+mov bx,200
+add ax,bx
+xor bx,bx
+mov bx,50
+sub ax,bx
+add cx,ax
+dec cx 
+ret
+string db "VIVA ASSEMBLER",13,10,"$"
+end begin  
