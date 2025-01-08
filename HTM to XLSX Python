@@ -1,0 +1,158 @@
+import os
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font
+from bs4 import BeautifulSoup
+import re
+
+class HTMLToExcelConverter:
+    def __init__(self, root):
+        self.root = root  
+        self.root.title("HTM to Excel Converter ®by Vatolin") 
+
+        # Начальный размер окна
+        self.root.geometry("700x170") 
+
+        self.label = tk.Label(root, text="Выберите файл HTM для конвертации")
+        self.label.pack(pady=10) 
+
+        self.button_select = tk.Button(root, text="ШАГ 1. Выбрать файл HTM", command=self.select_file)
+        self.button_select.pack(pady=10) 
+
+        self.button_convert = tk.Button(root, text="ШАГ 2. Конвертировать в XLSX", command=self.convert_html_to_excel)
+        self.button_convert.pack(pady=10) 
+
+    # Выбор файла HTM
+    def select_file(self):
+        file_path = filedialog.askopenfilename(filetypes=[("HTM files", "*.htm")])  # Окно для выбора файла
+        if file_path:
+            self.file_path = file_path  # Сохраняем путь к выбранному файлу
+            self.label.config(text=f"Выбран файл: {file_path}")  # Обновляем текст на метке
+
+    def convert_html_to_excel(self):
+        try:
+            # Был ли выбран файл
+            if not hasattr(self, 'file_path') or not self.file_path:
+                messagebox.showerror("Ошибка", "Пожалуйста, выберите файл с расширением HTM")  # Если не выбран файл
+                return
+
+            with open(self.file_path, 'r', encoding='windows-1251') as file:
+                html_content = file.read()
+
+            # Разбор HTM-контента с использованием библиотеки
+            soup = BeautifulSoup(html_content, 'html.parser')
+            tables = soup.find_all('table')  # Находим все таблицы в HTML-файле
+
+            # Если таблицы не найдены, выводим ошибку
+            if not tables:
+                messagebox.showerror("Ошибка", "Таблицы не найдены в исходном файле")
+                return
+
+            # Создаем новый Excel файл
+            wb = Workbook()
+            ws = wb.active
+            ws.title = "Таблица"  # Заголовок листа в Excel
+
+            row = 1  
+
+            for table in tables:
+                # Обработка заголовков таблицы
+                headers = table.find_all('th')
+                col = 1
+                for header in headers:
+                    ws.cell(row=row, column=col, value=header.get_text(strip=True))  
+                    col += 1
+                row += 1 
+
+                # Обработка строк таблицы 
+                for tr in table.find_all('tr')[1:]:  # Пропускаем строку с заголовками
+                    tds = tr.find_all('td')
+                    if not tds:
+                        continue  # Если в строке нет данных, пропускаем ее
+
+                    col = 1
+                    has_data = False  # Флаг наличия данных в строке
+                    is_artifact_row = False  # Флаг наличия артефакта в строке
+
+                    # Регулярное выражение для поиска артефактов в строках
+                    artifact_pattern = r"\\\\Конструкторский\\(?:[^\n\\]+\\)*[^\n\\]+(Страница \d+)"
+                    artifact_regex = re.compile(artifact_pattern)
+
+                    # Обрабатываем каждую ячейку в строке
+                    for td in tds:
+                        cell_text = td.get_text(strip=True)  # Получаем текст из ячейки
+                        if not cell_text:
+                            col += 1
+                            continue  
+
+                        # Проверка на артефакт
+                        if artifact_regex.match(cell_text):
+                            print(f"Удалено: {cell_text}") 
+                            is_artifact_row = True  
+                            break  
+
+                        # Если ячейка не является артефактом, записываем данные в Excel
+                        else:
+                            ws.cell(row=row, column=col, value=cell_text)
+                            has_data = True  # Фиксируем наличие данных в строке
+
+                        col += 1  # Переход к следующей ячейке
+
+                    if has_data and not is_artifact_row:
+                        row += 1  # Если строка содержит данные и не является артефактом, увеличиваем индекс строки
+
+            # Удаление пустых столбцов и строк
+            self.remove_empty_columns_and_rows(ws)
+
+            # Жирный шрифт для заголовков и автофильтры
+            self.add_excel_formatting(ws)
+
+            output_file = os.path.splitext(self.file_path)[0] + ".xlsx"
+            wb.save(output_file)
+
+            messagebox.showinfo("Успех", f"Конвертация завершена! Файл XLSX сохранен по пути: {output_file}")
+        except Exception as e:
+            messagebox.showerror("Ошибка", f"Ошибка при конвертации: {e}")
+
+    # Метод для удаления пустых столбцов и строк из Excel
+    def remove_empty_columns_and_rows(self, ws):
+        # Удаляем пустые столбцы
+        for col in range(ws.max_column, 0, -1):
+            if all(cell.value is None for cell in ws[get_column_letter(col)]):
+                ws.delete_cols(col)
+
+        # Удаляем пустые строки
+        for row in range(ws.max_row, 0, -1):
+            if all(cell.value is None for cell in ws[row]):
+                ws.delete_rows(row)
+
+    # Метод для добавления форматирования в Excel
+    def add_excel_formatting(self, ws):
+        # Применение жирного шрифта к заголовкам
+        for col in range(1, ws.max_column + 1):
+            ws.cell(row=1, column=col).font = Font(bold=True)
+
+        # Добавление автофильтров
+        ws.auto_filter.ref = f"A1:{get_column_letter(ws.max_column)}1"
+
+        # Автоматическая настройка ширины столбцов
+        for col in range(1, ws.max_column + 1):
+            max_length = 0
+            # Максимальная длина текста в ячейке столбца
+            for cell in ws[get_column_letter(col)]:
+                try:
+                    if len(str(cell.value)) > max_length:
+                        max_length = len(cell.value)
+                except:
+                    pass
+            adjusted_width = (max_length + 10)  # Отступ для удобства
+            ws.column_dimensions[get_column_letter(col)].width = adjusted_width
+
+# Запуск приложения
+if __name__ == "__main__":
+    root = tk.Tk()  # Главное окно
+    app = HTMLToExcelConverter(root)  # Инициализация его
+    root.mainloop()  # Запуск главного цикла
