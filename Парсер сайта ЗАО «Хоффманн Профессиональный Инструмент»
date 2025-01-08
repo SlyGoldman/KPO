@@ -1,0 +1,251 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import pandas as pd
+import time
+import random
+from openpyxl.styles import PatternFill
+from openpyxl.utils import get_column_letter
+import tkinter as tk
+from tkinter import messagebox, ttk, filedialog
+import requests
+
+# Глобальные переменные
+chrome_driver_path = ''  # Путь к chromedriver.exe
+output_directory = ''  # Директория для сохранения файла
+output_filename = 'hoffmann_tools.xlsx'  # Имя файла по умолчанию
+TOKEN = ''  # Telegram Bot Token
+CHAT_ID = ''  # Telegram Chat ID
+
+# URL для различных категорий товаров
+urls = [
+    ('Монолитный режущий инструмент', 'https://hoffmann-group.ru/collection/kategoriya-1?page={page}'),
+    ('Сборный режущий инструмент', 'https://hoffmann-group.ru/collection/kategoriya-2?page={page}'),
+    ('Вспомогательный инструмент', 'https://hoffmann-group.ru/collection/vspomogatelnyy-instrument?page={page}'),
+    ('Измерительный инструмент', 'https://hoffmann-group.ru/collection/izmeritelnyy-instrument?page={page}'),
+    ('Слесарно-монтажный инструмент', 'https://hoffmann-group.ru/collection/slesarno-montazhnyy-instrument___3?page={page}'),
+    ('Запчасти', 'https://hoffmann-group.ru/collection/katalog-1-7f8990?page={page}'),
+    ('Шлифовальный инструмент', 'https://hoffmann-group.ru/collection/shlifovalnyy-instrument?page={page}'),
+    ('Электроинструмент и инвентарь', 'https://hoffmann-group.ru/collection/elektroinstrument-i-inventar?page={page}')
+]
+
+# Цвета для оформления заголовков в Excel
+colors = ['FF5733', '33FF57', '3357FF', 'FFFF33', 'FF33FF', '33FFFF', 'FFD700', 'D3D3D3', '00a8cc', 'cfb53b', '310062']
+
+def send_telegram_message(message):
+    """Отправка сообщения в Telegram, если заданы токен и chat_id."""
+    if TOKEN and CHAT_ID:
+        url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+        payload = {'chat_id': CHAT_ID, 'text': message}
+        requests.post(url, data=payload)
+
+def parse_tools(selected_categories, pages_to_parse):
+    """Парсинг инструментов с сайта по заданным категориям и количеству страниц."""
+    global output_directory, output_filename, chrome_driver_path
+    if not chrome_driver_path:
+        messagebox.showerror("Ошибка", "Пожалуйста, выберите путь к файлу chromedriver.exe")
+        return
+
+    service = Service(chrome_driver_path)
+    driver = webdriver.Chrome(service=service)
+
+    all_tools = {}
+    existing_tools_set = set()
+
+    for category_name, base_url in urls:
+        if category_name not in selected_categories:
+            continue
+
+        tools = []
+        for page in range(1, pages_to_parse + 1):
+            try:
+                url = base_url.format(page=page)
+                driver.get(url)
+                wait = WebDriverWait(driver, 10)
+                wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'list-products')))
+
+                product_boxes = driver.find_elements(By.XPATH, '//*[@id="page-loading-overlay"]/div[2]/ul/li')
+                if not product_boxes:
+                    break
+
+                for box in product_boxes:
+                    try:
+                        item_form = box.find_element(By.TAG_NAME, 'form')
+                        name = item_form.get_attribute('data-item-title').strip()
+                        if name not in existing_tools_set:
+                            existing_tools_set.add(name)
+                            send_telegram_message(f"Новый товар добавлен: {name}")
+
+                        image_value = item_form.get_attribute("data-item-image").replace("thumb", "large")
+                        if image_value == "/images/no_image_large.jpg":
+                            image_value = "Изображение товара на сайте отсутствует"
+
+                        article = item_form.get_attribute('data-item-sku')
+                        brand_name = item_form.get_attribute('data-item-brand')
+                        price_value = item_form.get_attribute('data-item-price')
+                        currency = item_form.get_attribute('data-item-currency')
+                        if not price_value.strip():
+                            price_value = "По запросу или нет в наличии"
+
+                        tools.append({
+                            'Название': name,
+                            'Артикул': article,
+                            'Бренд': brand_name if brand_name else "-",
+                            'Цена (без НДС и учета доставки)': f'{price_value} {currency}',
+                            'Изображение товара': image_value
+                        })
+                        # Наименования в консоли для отладки (для создателя)
+                        print(f"Имя товара: {name}, Артикул: {article}, Бренд: {brand_name}, Цена (без НДС и учета доставки): {price_value}, Изображение: {image_value}")
+
+                    except Exception as e:  # Обработка исключений при извлечении данных о товаре - если, например, на странице нет товаров
+                        print(f"Ошибка при извлечении данных о товаре: {e}")
+            except Exception as e:
+                print(f"Завершение парсинга категории '{category_name}'. Загрузка страницы {page} для URL: {base_url} не удалась.")
+                break
+
+            if tools:  # Если товары найдены
+                all_tools[category_name] = tools  # Сохранение товаров в словаре
+                print(f"Все товары для категории '{category_name}' добавлены в итоговый файл.")
+            else:
+                print(f"В категории '{category_name}' товары не найдены.")
+
+            time.sleep(random.uniform(2, 6))  # Рандомная задержка от 2 до 6 секунд между запросами, чтобы не забанили на заводе и на сайте
+    driver.quit()
+
+    output_file_path = f"{output_directory}/{output_filename}"
+    with pd.ExcelWriter(output_file_path) as writer:
+        for category_index, (category_name, tools) in enumerate(all_tools.items()):  # Проход по категориям товаров
+            df = pd.DataFrame(tools)  # Создание DataFrame из списка товаров
+            # Делаем кликабельные ссылки в итоговом файле
+            df['Изображение товара'] = df['Изображение товара'].apply(
+                lambda x: f'=HYPERLINK("{x}")' if x != "Не указано" else "Не указано"
+            )
+            df.to_excel(writer, index=False, sheet_name=category_name[:30])  # Запись данных в Excel
+
+            # Получаем доступ к книге и листу для оформления
+            workbook = writer.book
+            worksheet = writer.sheets[category_name[:30]]
+
+            header_fill = PatternFill(start_color=colors[category_index % len(colors)],
+                                        end_color=colors[category_index % len(colors)],
+                                        fill_type='solid')
+
+            for cell in worksheet[1]:  # Разукрашиваем только первую строку
+                cell.fill = header_fill
+
+            image_column_letter = get_column_letter(df.columns.get_loc('Изображение товара') + 1)
+            worksheet.column_dimensions[image_column_letter].width = 25  # Установка ширины колонки для изображений
+
+            for column in worksheet.columns:  # Настройка ширины остальных колонок
+                max_length = 0
+                for cell in column:
+                    try:
+                        length = len(str(cell.value))
+                        max_length = max(max_length, length)
+                    except Exception:
+                        pass
+                adjusted_width = (max_length + 2)
+                adjusted_width = max(adjusted_width, 25)
+
+                if column[0].column_letter == 'A':  # Дополнительная ширина для колонки A
+                    adjusted_width += 5
+                worksheet.column_dimensions[column[0].column_letter].width = adjusted_width
+
+                if column[0].column_letter == 'C':  # Дополнительная ширина для колонки C
+                    adjusted_width += 10
+                    worksheet.column_dimensions[column[0].column_letter].width = adjusted_width
+
+                if column[0].column_letter == 'D':  # Дополнительная ширина для колонки D
+                    adjusted_width += 10
+                    worksheet.column_dimensions[column[0].column_letter].width = adjusted_width
+            
+            worksheet.auto_filter.ref = worksheet.dimensions  # Включение автофильтра на листе
+
+    messagebox.showinfo("Завершение парсинга", f"Парсинг завершен. Данные сохранены в '{output_file_path}'.")
+
+def choose_directory():
+    global output_directory
+    output_directory = filedialog.askdirectory()
+    directory_label.config(text=f"Выбранный путь к итоговому файлу: {output_directory}")
+
+def test_send_telegram():
+    token = token_entry.get()
+    chat_id = chat_id_entry.get()
+    if not token or not chat_id:
+        messagebox.showerror("Ошибка", "Введите токен и chat_id.")
+        return
+    send_telegram_message("Тестовое сообщение.")
+    messagebox.showinfo("Успех", "Тестовое сообщение отправлено!")
+
+def choose_chrome_driver():
+    global chrome_driver_path
+    chrome_driver_path = filedialog.askopenfilename(title="Выберите файл chromedriver.exe", filetypes=[("EXE files", "*.exe")])
+    driver_label.config(text=f"Выбранный путь к chromedriver.exe: {chrome_driver_path}")
+
+def start_parsing():
+    selected_categories = [cat for cat, var in category_vars.items() if var.get()]
+    global output_filename
+    try:
+        pages_to_parse = int(pages_entry.get())
+        if pages_to_parse < 1:
+            raise ValueError
+    except ValueError:
+        messagebox.showerror("Ошибка ввода", "Введите положительное число страниц.")
+        return
+    if not selected_categories:
+        messagebox.showwarning("Выбор категорий", "Выберите хотя бы одну категорию.")
+        return
+    output_filename = filename_entry.get() or 'hoffmann_tools.xlsx'
+    parse_tools(selected_categories, pages_to_parse)
+
+# Создание GUI
+root = tk.Tk()
+root.title("Парсер инструментов Хоффманн ®by Vatolin")
+
+frame = ttk.Frame(root)
+frame.pack(padx=35, pady=35)
+
+ttk.Label(frame, text="Введите токен бота (опционально):").pack(anchor='w')
+token_entry = ttk.Entry(frame, width=80)
+token_entry.pack(anchor='w')
+
+ttk.Label(frame, text="Введите chat_id (опционально):").pack(anchor='w')
+chat_id_entry = ttk.Entry(frame, width=80)
+chat_id_entry.pack(anchor='w')
+
+test_button = ttk.Button(frame, text="Тест отправки сообщений в Telegram", command=test_send_telegram)
+test_button.pack(pady=5)
+
+category_vars = {}
+for category_name, _ in urls:
+    var = tk.BooleanVar(value=True)
+    category_vars[category_name] = var
+    cb = ttk.Checkbutton(frame, text=category_name, variable=var)
+    cb.pack(anchor='w')
+
+ttk.Label(frame, text="Количество страниц выбранных разделов для парсинга:").pack(anchor='w')
+pages_entry = ttk.Entry(frame, width=80)
+pages_entry.pack(anchor='w')
+
+ttk.Label(frame, text="Имя итогового файла для сохранения (.xlsx):").pack(anchor='w')
+filename_entry = ttk.Entry(frame, width=80)
+filename_entry.pack(anchor='w')
+
+select_dir_button = ttk.Button(frame, text="Выбрать директорию для сохранения итогового файла", command=choose_directory)
+select_dir_button.pack(pady=5)
+
+select_driver_button = ttk.Button(frame, text="Выбрать путь к chromedriver.exe", command=choose_chrome_driver)
+select_driver_button.pack(pady=5)
+
+directory_label = ttk.Label(frame, text="Директория для итогового файла не выбрана")
+directory_label.pack(anchor='w')
+
+driver_label = ttk.Label(frame, text="Путь к chromedriver.exe не выбран")
+driver_label.pack(anchor='w')
+
+start_button = ttk.Button(frame, text="Начать парсинг", command=start_parsing)
+start_button.pack(pady=20)
+
+root.mainloop()
